@@ -408,8 +408,209 @@ a) this is a reference variable that refers to the current object.
  
  -------------------------------------------------------------------------------
  
+ Enumeration:
+              1) enum can have fields, constructors and methods.
+              2) enum may implement many interfaces but cannot extend any class because it internally extends Enum class
+
+
+ enum week { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };  
+ week day;
+ day = Wedenesay;
+ print(day)     ///2
+       
+ ---------------------------------------------------------------------------------------------------
  
-       
-       
-       
+ Friend:
  
+       1) Friend function/class:
+                     If a function/class is declared as a friend function/class in some class, then the protected and 
+                     private data of that class can be accessed using the function/class.
+                     
+                     For accessing the data, the declaration of a friend function/class should be done inside 
+                     the body of a class starting with the keyword friend.
+                     
+                      An ordinary function that is not the member function of a class has no privilege to access the 
+                      private data members, but the friend function does have the capability to access any private data members.
+                     
+                       
+                      
+                      
+                      a) Friend function:
+                                 It can be invoked like a normal function without using the object.
+                                 because it is not in scope of class sot cannot be accesed by object.
+                                 
+                                 If friend function wants to acccess class member then it should have class's object as function paramaeter and that object access respective class object
+                                 using an object name and dot membership operator with the member name.
+                                 
+                                 Friend function is defined without class name and scope operator.
+                         
+                                 A friend function can also be used for function overloading.
+                                 
+                                 
+                     b) Friend class : 
+                                 If friend class wants to acccess class member then it should have class's object as function paramaeter and that object access respective class's data member
+                                 using an object name and dot membership operator with the member name.
+ 
+ 
+ 
+ ---------------------------------------------------------------------------------------------------------
+
+
+                                                  Inheritance:
+                                                  
+1) The private members of the base class are never inherited                                                  
+2) 5 types supported in c++:
+
+    Single inheritance
+    Multiple inheritance(Diamond case)(many parents one child)
+    Hierarchical inheritance(one parent many child)
+    Multilevel inheritance
+    Hybrid inheritance
+
+
+
+  3)                             class derived_class_name :: visibility-mode base_class_name  
+                               {  
+                                   // body of the derived class.  
+                               }  
+                               
+                               
+                               
+    visibility mode: The visibility mode specifies whether the features of the base class are publicly inherited or
+                     privately inherited. It can be public or private.
+                     By default private.
+                     
+                     
+    4) Visibility modes:
+     
+     
+             Public: When the member is declared as public, it is accessible to all the functions of the program.
+             Private: When the member is declared as private, it is accessible within the class only.
+             Protected: When the member is declared as protected, it is accessible within its own class as well as the class immediately derived from it.
+
+
+
+   5)
+   Visibility of Inherited Members
+                                         Base class visibility 	                      Derived class visibility
+                                                                                   Public     	   Private        	Protected
+                                                Private 	                      Not Inherited 	Not Inherited 	   Not Inherited
+                                                Protected                         	Protected 	   Private 	        Protected
+                                                Public 	                             Public 	    Private       	  Protected
+                                                
+                                                
+                                                
+   6) Ambiguity in Multiple inheritance:
+                  i)  When more than one parent class has same function name then their ambiguity takes place i their child class.
+                  
+                  
+                                     class base1
+                                         {
+                                           public:
+                                              void someFunction( )
+                                              { .... ... .... }  
+                                         };
+                                         class base2
+                                         {
+                                             void someFunction( )
+                                              { .... ... .... } 
+                                         };
+                                         class derived : public base1, public base2
+                                         {
+                                            someFunction();
+                                         };
+
+                                         int main()
+                                         {
+                                             derived obj;
+                                             obj.someFunction() // Error!  
+                                         }
+
+
+
+
+      TO SOLVE  THIS USE AS FOLLOWING:
+      
+      
+                                         class derived : public base1, public base2
+                                         {
+                                                 .base1::someFunction( );  
+                                                  base2::someFunction();
+                                         };
+
+
+
+      
+                                         int main()
+                                               {  derived obj;
+                                                   obj.base1::someFunction( );  // Function of base1 class is called
+                                                   obj.base2::someFunction();   // Function of base2 class is called.
+                                               }
+                  
+                  
+                  
+        7) AMBIGUITY IN SINGLE INHERITANCE:
+                    When base class' function and derived class' function is totally same i.e. no. of argument and 
+                    argument type and return type same then that function is overrided that means base class' function is ignored in derived class.
+                         This is called function overriding.
+                         
+     ----------------------------------------------------------------------------------------------------------------------
+     
+     
+     Aggregation:(HAS-A relationship):
+     
+     ===>>>>  example of aggregation where Employee class has the reference of Address class as data member. 
+     
+                                    #include <iostream>  
+                                        using namespace std;  
+                                        class Address {  
+                                            public:  
+                                           string addressLine, city, state;    
+                                             Address(string addressLine, string city, string state)    
+                                            {    
+                                                this->addressLine = addressLine;    
+                                                this->city = city;    
+                                                this->state = state;    
+                                            }    
+                                        };  
+                                        class Employee    
+                                            {    
+                                                private:  
+                                                Address* address;  //Employee HAS-A Address   
+                                                public:  
+                                                int id;    
+                                                string name;    
+                                                Employee(int id, string name, Address* address)    
+                                               {    
+                                                   this->id = id;    
+                                                   this->name = name;    
+                                                   this->address = address;    
+                                               }    
+                                             void display()    
+                                               {    
+                                                   cout<<id <<" "<<name<< " "<<     
+                                                     address->addressLine<< " "<< address->city<< " "<<address->state<<endl;    
+                                               }    
+                                           };   
+                                        int main(void) {  
+                                            Address a1= Address("C-146, Sec-15","Noida","UP");    
+                                            Employee e1 = Employee(101,"Nakul",&a1);    
+                                                    e1.display();   
+                                           return 0;  
+                                        }  
+
+     //////101 Nakul C-146, Sec-15 Noida UP
+
+     --------------------------------------------------------------------------------------------------------------------------
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
