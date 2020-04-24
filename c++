@@ -605,6 +605,24 @@ a) this is a reference variable that refers to the current object.
      
      
      
+     Polymorphism : 
+           
+              A lady behaves like a teacher in a classroom, mother or daughter in a home and customer in a market. 
+              Here, a single person is behaving differently according to the situations.
+     
+     
+     
+     Compile Time (overloading , Static or early binding): Function overloading and operator overloading.
+     
+     Run time(overriding, Dynamic or late binding)  : Virtual Function , Method Overriding, And pointer.
+     
+     
+     
+     Overloading is a compile time polymorphism where more than one method is having the same name
+     but with the different number of parameters or the type of the parameters.
+     
+     Overriding is a run time polymorphism where more than one method is having the same name,
+     number of parameters and the type of the parameters.
      
      
      
@@ -614,3 +632,884 @@ a) this is a reference variable that refers to the current object.
      
      
      
+                          a)  // pointers to base class
+                                    #include <iostream>
+                                    using namespace std;
+
+                                    class Polygon {
+                                      protected:
+                                        int width, height;
+                                      public:
+                                        void set_values (int a, int b)
+                                          { width=a; height=b; }
+                                    };
+
+                                    class Rectangle: public Polygon {
+                                      public:
+                                        int area()
+                                          { return width*height; }
+                                    };
+
+                                    class Triangle: public Polygon {
+                                      public:
+                                        int area()
+                                          { return width*height/2; }
+                                    };
+
+                                    int main () {
+                                      Rectangle rect;
+                                      Triangle trgl;
+                                      Polygon * ppoly1 = &rect;   // upcasting
+                                      Polygon * ppoly2 = &trgl;
+                                      ppoly1->set_values (4,5);
+                                      ppoly2->set_values (4,5);
+                                      cout << rect.area() << '\n';
+                                      cout << trgl.area() << '\n';
+                                      return 0;
+                                    }
+     
+                       //  output 20 10
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                                       #include <iostream>    
+                                         using namespace std;    
+                                         class Shape {                                        //  base class  
+                                             public:    
+                                         virtual void draw(){                             // virtual function  
+                                         cout<<"drawing..."<<endl;      
+                                             }        
+                                         };     
+                                         class Rectangle: public Shape                  //  inheriting Shape class.  
+                                         {      
+                                          public:    
+                                          void draw()      
+                                            {      
+                                                cout<<"drawing rectangle..."<<endl;      
+                                             }      
+                                         };    
+                                         class Circle: public Shape                        //  inheriting Shape class.  
+
+                                         {      
+                                          public:    
+                                          void draw()      
+                                            {      
+                                               cout<<"drawing circle..."<<endl;      
+                                            }      
+                                             void draw2()      
+                                            {      
+                                               cout<<"drawing circle2..."<<endl;      
+                                            }      
+                                         };    
+                                         int main(void) {    
+                                             Shape *s;                               //  base class pointer.  
+                                             Shape sh;                               // base class object.  
+                                                Rectangle rec;    
+                                                 Circle cir;    
+                                               s=&sh;    
+                                              s->draw();     
+                                                 s=&rec;    
+                                              s->draw();      
+                                             s=&cir;
+                                             s->draw();  
+                                             
+                                             s->draw2();      ////// ERROR IS THROWN AS IT IS NOT DEFINED IN BASE CLASS OF s.
+                                         }    
+ 
+ 
+                               ///  output:  drawing...
+                                            drawing rectangle...
+                                            drawing circle...
+                                            
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                  NOTE:: IF virtual keyword is not written then output of program will be 
+                                                             drawing......
+                                                             drawing.......
+                                                             drawing.......
+                                            
+            
+            
+            
+            
+            
+                                            
+                                            
+      DOWNCASTING :  . It converts base class pointer to derived class pointer.
+                                        
+                                     eg. Employee is base class and manager is derived from employee. 
+                                          //pointer to base class object
+                                          Employee* emp;
+                                          //object of derived class
+                                          Manager m1("Steve", "Kent", 3000, 0.2);
+                                          //implicit upcasting
+                                          emp = &m1;
+                                          //explicit downcasting from Employee to Manager
+                                          Manager* m2 = (Manager*)(emp);
+                      
+                   
+    DOWNCASTING IS NOT SAFE AS UPCASTING.
+    
+    
+A class that declares or inherits a virtual function is called a polymorphic class
+    
+    
+----------------------------------------------------------------------------------------------------------------------
+
+
+Function overloading:
+
+
+                    a) Causes of Function Overloading:
+                         Type Conversion.
+                         Function with default arguments.
+                         Function with pass by reference.
+
+        
+            i) Type conversion : 
+                              
+                                      #include<iostream>  
+                                     using namespace std;  
+                                     void fun(int);  
+                                     void fun(float);  
+                                     void fun(int i)  
+                                     {  
+                                         std::cout << "Value of i is : " <<i<< std::endl;  
+                                     }  
+                                     void fun(float j)  
+                                     {  
+                                         std::cout << "Value of j is : " <<j<< std::endl;  
+                                     }  
+                                     int main()  
+                                     {  
+                                         fun(12);  
+                                         fun(1.2);  
+                                         return 0;  
+                                     }  
+                             
+         
+                  fun(12) is ok.
+                  BUT fun(1.2) creates ambiguity because any floating point number is considered as double in c++ .
+                  so 1.2 is considered as double .
+                  If we replace  from float to double then there is no ambiguity and code works.
+                  
+                  
+                  
+                  
+                  ii)Function with default arguments.
+                  
+                                   #include<iostream>  
+                                   using namespace std;  
+                                   void fun(int);  
+                                   void fun(int,int);  
+                                   void fun(int i)  
+                                   {  
+                                       std::cout << "Value of i is : " <<i<< std::endl;  
+                                   }  
+                                   void fun(int a,int b=9)  
+                                   {  
+                                       std::cout << "Value of a is : " <<a<< std::endl;  
+                                       std::cout << "Value of b is : " <<b<< std::endl;  
+                                   }  
+                                   int main()  
+                                   {  
+                                       fun(12);  
+
+                                       return 0;  
+                                   }  
+                                   
+                                   
+                                   Here is ambiguity.
+                                   
+                              
+                      iii) Function with pass by reference.
+                      
+                                  #include <iostream>  
+                                 using namespace std;  
+                                 void fun(int);  
+                                 void fun(int &);   
+                                 int main()  
+                                 {  
+                                 int a=10;  
+                                 fun(a); // error, which f()?  
+                                 return 0;  
+                                 }  
+                                 void fun(int x)  
+                                 {  
+                                 std::cout << "Value of x is : " <<x<< std::endl;  
+                                 }  
+                                 void fun(int &b)  
+                                 {  
+                                 std::cout << "Value of b is : " <<b<< std::endl;  
+                                 }  
+                                   
+                  
+                  
+----------------------------------------------------------------------------------------------------------------------
+
+Opereator overloading:
+(WE use operator overloading because we can do arithmatic operation on primitive data types such as int,float etc.. 
+but not for user definde type. So defining operators on user defined data types is called operator overloading)
+
+                  a) Operators that cannot be overloaded:
+                           
+                                          Scope operator (::)
+                                          Sizeof
+                                          member selector(.)
+                                          member pointer selector(*)
+                                          ternary operator(?:)
+
+                 
+
+
+
+
+                  b) Operators that can not overloaded by friend function.
+                                         = 
+                                         []
+                                         ()
+                                         ->
+                                         
+                   
+                 c)    Defining operator overloading function(if member function)
+                             
+                                   i) IF overloading unary operator 
+                                               return_type class_name  :: operator op()  
+                                                    {  
+                                                       // body of the function.  
+                                                    }  
+            
+                                      
+                                  ii) If overloading binary operator
+                                                 return_type class_name  :: operator op(class_name obj)  
+                                                    {  
+                                                       // body of the function.  
+                                                    }  
+                                                  
+  
+                      Calling the operator overload function:
+                                i) class_name obj;
+                                   obj op;   (or op obj;)             //calling  //// this statement is treated as obj.operator()
+
+        
+                                ii) class_name obj1;obj2;
+                                    obj1 op obj2             //// calling  ///// this statement is treated as obj1.operator(obj2)
+
+
+
+
+
+                   e)  Defining operator overloading function(if friend function in class)
+                             
+                                   i) IF overloading unary operator 
+                                               return_type operator op(class_name obj)  
+                                                    {  
+                                                       // body of the function.  
+                                                    }  
+            
+                                      
+                                  ii) If overloading binary operator
+                                                 return_type operator op(class_name obj1, class_name obj2)  
+                                                    {  
+                                                       // body of the function.  
+                                                    }  
+                                                  
+  
+                      Calling the operator overload function:
+                                i) class_name obj;
+                                   obj op;   (or op obj;)             //calling  //// this statement is treated as operator(obj)
+
+        
+                                ii) class_name obj1;obj2;
+                                    obj1 op obj2             //// calling  ///// this statement is treated as operator(obj1,obj2)
+
+
+
+
+
+
+                 f)  When unary operators are overloaded through a member function take no explicit arguments, 
+                     but, if they are overloaded by a friend function, takes one argument.
+                 
+                     When binary operators are overloaded through a member function takes one explicit argument, 
+                     and if they are overloaded through a friend function takes two explicit arguments. 
+                     
+                     
+    
+       
+                               
+                 g)                    #include <iostream>  
+                                       using namespace std;  
+                                       class A  
+                                       {  
+
+                                           int x;  
+                                             public:  
+                                             A(){}  
+                                           A(int i)  
+                                           {  
+                                              x=i;  
+                                           }  
+                                           void operator+(A);  /// binary operator overloading so required one argument                                           
+                                           void display();  
+                                       };  
+
+                                       void A :: operator+(A a)  
+                                       {  
+
+                                           int m = x+a.x;  
+                                           cout<<"The result of the addition of two objects is : "<<m;  
+
+                                       }  
+                                       int main()  
+                                       {  
+                                           A a1(5);  
+                                           A a2(4);  
+                                           a1+a2;  
+                                           return 0;  
+                                       }                     /////// output 9 
+
+    
+                              
+                              
+                              
+                      h)  
+                                #include <iostream>    
+                                 using namespace std;    
+                                 class Test    
+                                 {    
+                                    private:    
+                                       int num;    
+                                    public:    
+                                        Test(): num(8){}    
+                                        void operator ++()         {     
+                                           num = num+2;     
+                                        }    
+                                        void Print() {     
+                                            cout<<"The Count is: "<<num;     
+                                        }    
+                                 };    
+                                 int main()    
+                                 {    
+                                     Test tt;    
+                                     ++tt;  // calling of a function "void operator ++()"    
+                                     tt.Print();    
+                                     return 0;    
+                                 }                      ///// output 10
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                      
+                      
+                      
+                      
+ ----------------------------------------------------------------------------------------------------------------------------
+ Abstract class and pure virtual function:
+ 
+                     a) An Abstract class is a class that has at least one pure virtual function.
+                     b) A pure virtual function is a function without definition. 
+                                           virtual return-type function-name(parameter-list) = 0;
+                     c) You cannot create an object of the abstract class, 
+                        but you can still use pointers of a base class to point an objects of the derived class.
+                        
+                        
+                     d) C++ provides possibility to create pure virtual destructors.
+                        Pure virtual destructor also makes a class an abstract class,
+                        but there is a difference between pure virtual function and pure virtual destructor. 
+                        Pure virtual destructor must be implemented:
+               
+                                                                  class A
+                                                                 {
+                                                                      public:
+                                                                       virtual ~A() = 0;
+                                                                 };
+
+                                                                 A::~A()
+                                                                 {
+                                                                      cout << "Base class destrctor" << endl;
+                                                                 }
+                                                                 
+                        But pure virtual function is not implemented.
+                     
+                     
+                     
+                   e) Pure Virtual Function with Function Body : 
+                                    class Base
+                                            {
+                                                int x;
+                                            public:
+                                                 virtual void fun() = 0
+                                             {
+                                              cout<<"Base Class fun() is Called";
+                                             }
+                                                 int getX() 
+                                             { 
+                                              return x; 
+                                             }
+                                            };
+
+                                            class Derived: public Base
+                                            {
+                                                 int y;
+                                            public:
+                                                 void fun() 
+                                             { 
+                                              cout << "Derived Class fun() called"; 
+                                             }
+                                            };
+
+                                            int main(void)
+                                            {
+                                                 Derived d;
+                                                 d.fun();
+                                             
+                                                          //Calling Base Class Pure Virtual Function fun()
+                                                          Base::fun();
+                                                 return 0;
+                                            }
+ 
+ 
+ 
+ ---------------------------------------------------------------------------------------------------------------------
+ 
+a) destructor can not be overloaded , constructor can be overloaded
+b) Virtual functions cannot be static members.
+c) Constructors and destructor cannot be declared with the keyword virtual.
+d) Destructor can be pure virtual also but then destructor have to be implemented also.
+e) Constructors and destructors cannot be declared static, const, or volatile.
+f) Derived classes do not inherit or overload constructors or destructors from their base classes, 
+   but they do call the constructor and destructor of base classes.
+
+
+g) Constructor can be defined in private section of class.
+   Use of Friend Class in this case is important ==>> If we want that class/class_member should not be instantiated by anyone else but only by a friend class. 
+
+
+h) normal non member unction can not access class' private/protected member from outside class but friend function ,that is not a memebr of class,can access from outside class 
+   by passing that class' object as function parameter.
+[friend function/class can acccess private data]
+ ------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ Data Abstraction : 
+ 
+ a) Data Abstraction is a process of providing only the essential details to the outside world and hiding the internal details,
+    i.e., representing only the essential details in the program.
+    
+    
+ METHODS OF ACHIEVING DATA ABSTRACTION:
+ i) Abstraction using classes: An abstraction can be achieved using classes. 
+                               A class has the responsibility to determine which data member is to
+                               be visible outside and which is not.For this it uses private , protected and public specifier.
+                               A class communicates with the outer world by using public data member functions.
+                               These member functions are often called interface of a class.
+                               
+
+ii) Abstraction in header files: An another type of abstraction is header file. 
+                                 For example, pow() function available is used to calculate the power of a number without 
+                                 actually knowing which algorithm function uses to calculate the power. 
+                                 Thus, we can say that header files hides all the implementation details from the user.
+ 
+ 
+ ------------------------------------------------------------------------------------------------------------------------
+ 
+ Namespaces:
+ 
+   1) Properties of namespace:
+                     Namespace declarations appear only at global scope.
+                     Namespace declarations can be nested within another namespace.
+                     Namespace declarations don’t have access specifiers. (Public or private)
+                     No need to give semicolon after the closing brace of definition of namespace.
+
+ 
+ 
+   2) Why use namespaces?
+   Ans: a) Namespaces in C++ are used to organize too many classes so that it can be easy to handle the application.
+      
+        b) There cannot be two variables with the same name in the same scope. 
+           Using namespaces, we can create two variables or member functions having the same name.
+   
+      
+        c) EXTENSION OF PART b) -->>> You have two friends with the same name – Bill. When you speak with somebody about Bill,
+        you have to specify some additional information that which Bill you are talking about.
+        It can be his address or first name. 
+        
+        The same thing happens when you are using different libraries that
+        have the same identifiers for different object. You have to tell to compiler additional information about 
+        which object is used. In this case, you have to use the object’s namespace.
+        
+        
+        
+        
+        eg) Why namespace???
+                         // A program to demonstrate need of namespace 
+                                     int main() 
+                                     { 
+                                      int value; 
+                                      value = 0; 
+                                      double value; // Error here 
+                                      value = 0.0; 
+                                     } 
+
+                   In each scope, a name can only represent one entity. 
+                   So, there cannot be two variables with the same name in the same scope. 
+                   Using namespaces, we can create two variables or member functions having the same name.
+        
+        
+        
+        
+        
+        
+        eg)                         #include <iostream>  
+                                    using namespace std;  
+                                    namespace First {    
+                                        void sayHello() {   
+                                            cout<<"Hello First Namespace"<<endl;          
+                                        }    
+                                    }    
+                                    namespace Second  {    
+                                           void sayHello() {   
+                                               cout<<"Hello Second Namespace"<<endl;   
+                                           }    
+                                    }   
+                                    
+                                   
+                                    int main()  
+                                    {  
+                                     First::sayHello();  
+                                     Second::sayHello();  
+                                    return 0;  
+                                    }  
+                                    
+                                    ////// output --> Hello First Namespace
+                                                      Hello Second Namespace
+   
+   
+   
+   
+   
+                  
+                     eg) using namespace-----
+                     
+                     
+                                               #include <iostream>  
+                                           using namespace std;  
+                                           namespace First{  
+                                              void sayHello(){  
+                                                 cout << "Hello First Namespace" << endl;  
+                                              }  
+                                           }  
+                                           namespace Second{  
+                                              void sayHello(){  
+                                                 cout << "Hello Second Namespace" << endl;  
+                                              }  
+                                           }  
+                                           using namespace First;  
+                                           int main () {  
+                                              sayHello();  
+                                              return 0;  
+                                           }  
+
+                                       Output:
+                                       Hello First Namespace	
+
+                   
+                         
+                               NOTE: if we used using namespace for First and Second both then above code will throw an error.
+                               
+                               
+                               
+                               
+                               
+                       eg) Same name space at multiple places:(All are appended in one namespace automatically)
+                       
+                       
+                                                      namespace myFirstNamespace
+                                                           {
+                                                            void foo()
+                                                            {
+                                                             cout << "foo from myFirstNamespace is called" << endl;
+                                                            }
+                                                           }
+                                                           namespace mySecondNamespace
+                                                           {
+                                                            void foo()
+                                                            {
+                                                             cout << "foo from mySecondNamespace is called" << endl;
+                                                            }
+                                                           }
+                                                           namespace myFirstNamespace
+                                                           {
+                                                            int x = 10;
+                                                           }
+                                                           int main()
+                                                           {
+                                                            myFirstNamespace::foo();
+                                                            cout << "X = " << myFirstNamespace::x << endl;
+                                                            cout << "Y = " << myFirstNamespace::y << endl;
+                                                            return 0;
+                                                           }
+                                                           namespace myFirstNamespace
+                                                           {
+                                                            double y = 3.14;
+                                                           }
+ 
+ 
+ 
+ 
+                          eg) declaration of class inside namespace but definition outside--------
+ 
+                                     // A C++ program to demonstrate use of class 
+                                    // in a namespace 
+                                    #include <iostream> 
+                                    using namespace std; 
+
+                                    namespace ns 
+                                    { 
+                                     // Only declaring class here 
+                                     class geek; 
+                                    } 
+
+                                    // Defining class outside 
+                                    class ns::geek 
+                                    { 
+                                    public: 
+                                     void display() 
+                                     { 
+                                      cout << "ns geek display()\n"; 
+                                     } 
+                                    }; 
+
+                                    int main() 
+                                    { 
+                                     //Creating Object of geek Class 
+                                     ns::geek obj; 
+                                     obj.display(); 
+                                     return 0; 
+                                    } 
+
+
+
+
+                      eg) Define method outside namespace also:
+            
+                                    #include <iostream> 
+                                    using namespace std; 
+
+                                    namespace ns 
+                                    { 
+                                     void display(); 
+                                     class geek 
+                                     { 
+                                     public: 
+                                     void display(); 
+                                     }; 
+                                    } 
+
+                                    // Defining methods of namespace 
+                                    void ns::geek::display() 
+                                    { 
+                                     cout << "ns::geek::display()\n"; 
+                                    } 
+                                    void ns::display() 
+                                    { 
+                                     cout << "ns::display()\n"; 
+                                    } 
+
+                                    // Driver code 
+                                    int main() 
+                                    { 
+                                     ns::geek obj; 
+                                     ns::display(); 
+                                     obj.display(); 
+                                     return 0; 
+                                    } 
+
+
+
+
+                           eg) nested namespace:
+                            
+                                  namespace X
+                                  {
+                                   void foo()
+                                   {
+                                    cout << "foo from X is called" << endl;
+                                   }
+                                   namespace Y
+                                   {
+                                    void foo()
+                                    {
+                                     cout << "foo from Y is called" << endl;
+                                    }
+                                   }
+                                  }
+                                     
+                                     
+                                     
+                                  X::Y::foo(); ////// "foo from Y is called" 
+                                  
+                                  
+                                  
+                                  
+                               NOTE : namespace can be aliased as follows;
+
+                                                                namespace XY = X::Y;
+                                                                XY::foo(); ///// ////// "foo from Y is called" 
+                                                                
+                                                                
+                                                                
+                                                                
+       
+       
+       
+ ----------------------------------------------------------------------------------------------------------------------------
+ 
+ Exception Handling :
+       a)  Exception Handling in C++ is a process to handle runtime errors.
+       We perform exception handling so the normal flow of the application can be maintained even after runtime errors.
+       
+       b)  All exceptions are derived from std::exception class.
+       
+       
+       
+       c) try - throw -catch ==>>>> whatever is thrown by try block is taken by catch and thus program does not terminate evenif error occurs.
+                             
+          
+       
+       eg.
+                    #include <iostream>  
+                    using namespace std;  
+                    float division(int x, int y) {  
+                       if( y == 0 ) {  
+                          throw "Attempted to divide by zero!";  
+                       }  
+                       return (x/y);  
+                    }  
+                    int main () {  
+                       int i = 25;  
+                       int j = 0;  
+                       float k = 0;  
+                       try {  
+                          k = division(i, j);  
+                          cout << k << endl;  
+                       }catch (const char* e) {  
+                          cerr << e << endl;  
+                       }  
+                       return 0;  
+                    }  
+
+                Output:
+
+                Attempted to divide by zero!
+
+ 
+eg.USer defined exception -> it is done by inheriting exception class and overiding what() function.
+
+
+                class ZeroDivisionException :public exception
+                {
+                public:
+                 ZeroDivisionException(int data)
+                 {
+                  someData = data;
+                 }
+                 //override what function
+                 const char* what()
+                 {
+                  return "Zero division error";
+                 }
+                 int someData;
+                };
+                
+                
+                
+                
+                double divide(double a, double b)
+                {
+                 if (b == 0) //division by zero!!!!
+                  throw ZeroDivisionException(a);
+                 else
+                  return a/b;
+                }
+
+
+  
+  
+  
+                  int main()
+                  {
+                  try
+                     {
+                      double res = divide(1, 0);
+                     }
+                 catch (ZeroDivisionException e)
+                     {
+                      cout << e.what() << endl;
+                      cout << "Trying to divide " << e.someData << " by zero" << endl;
+                      }
+                  }
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Why Inline Function????
+ 
+ An inline function is a function in which body is inserted in the place of its call. 
+ These functions can be compared with Macros. 
+ Inline functions are used to improve performance of the application. 
+ However, many inline functions can lead your program to grow up in size. 
+ That is why often only small functions are declared as inline.
+ 
+ 
+  Use inline keyword with definition of function. 
+  In this case, you have to declare function in the same way as you declare a simple function:
+ 
+ 
+ eg.
+     //declaration of an inline function
+      class Person
+      {
+             string getLastName();
+      }
+
+
+
+    //// defining inline function
+         //getLastName is in the same header file with declaration of
+       //Person class
+       inline string Person::getLastName()
+       {
+        return lastName;
+       }
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+Mutable and Volatile
+
+
