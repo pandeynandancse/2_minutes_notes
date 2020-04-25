@@ -459,7 +459,14 @@ a) this is a reference variable that refers to the current object.
 
                                                   Inheritance:
                                                   
-1) The private members of the base class are never inherited                                                  
+1) The private members of the base class are never inherited    
+
+1b) By default inheritance of class  is private.
+
+1c) By default inheritance of struct  is public.
+
+1d) union and enum can not be inherited.
+
 2) 5 types supported in c++:
 
     Single inheritance
