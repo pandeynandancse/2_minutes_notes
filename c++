@@ -2,7 +2,7 @@ C follows the top-down approach.
 C++ follows the bottom-up approach.
 
  	C++ supports function overloading.
-  In C++, you can use functions in structure.
+  In C++, you can use functions/constructors in structure/union.
   Operator overloading is possible in C++.
   
   C programs are divided into procedures and modules 	C++ programs are divided into functions and classes.
@@ -403,9 +403,10 @@ a) this is a reference variable that refers to the current object.
  
  -------------------------------------------------------------------------------
  
- Structure in c does not have function/constructor/.
+ Structure/union in c does not have function/constructor/.
  But in c++ they exists.
  
+ Structures can be  inherited and by default public but union can not.
  -------------------------------------------------------------------------------
  
  Enumeration:
