@@ -409,7 +409,7 @@ Answer: Yes, You can perform any operation in the constructor as you perform in 
 
 
 
-    1) static method:
+    1) static method:(static method can be inherited)
                   
                         i) The static method can not use non static data member or call non-static method directly.
                        ii) this and super cannot be used in static context.
@@ -485,14 +485,15 @@ a) To refer current class instance variable
                 
                 class A{  
                       A(){  
-                      this(5);                           /// rule followed 
+                      this(5);                           /// rule that this() in constructor must be first statement is followed 
                       System.out.println("hello a");  
                       }  
                       A(int x){  
-                      System.out.println(x);  
+                      System.out.println(x); 
+		      this();                    ///// rule violated //// C.T. error
                       }  
                       
-                      this(5);                    ///// rule violated //// C.T. error
+                      
                       }  
                       class TestThis6{  
                       public static void main(String args[]){  
@@ -582,5 +583,489 @@ Aggregation(HAS-A): One class contains another class' object as it's data member
 
 
 
+-----------------------------------------------------------------------------------------------------------------------------
+
+Method overloading : It increases the readability of the program.
+                     Method Overloading is not possible by changing the return type of the method only this becauses causes ambiguity and sends CT ERROR.
+		     
+		   
+Question :  Can we overload java main() method?
+Answer : Yes, by method overloading. You can have any number of main methods in a class by method overloading. 
+         But JVM calls main() method which receives string array as arguments only.
 
 
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Meethod Overriding : If subclass (child class) has the same method as declared in the parent class, it is known as method overriding
+                     Method overriding is used for runtime polymorphism.
+		     Method must have same name and same no.of parameter and same typ of parameter.
+
+
+
+Note: Static method cannot be overriden because the static method is bound with class whereas instance method is bound with 
+      an object. Static belongs to the class area, and an instance belongs to the heap area.
+      So main method cannnot be overrriden because  it is static.
+   
+   
+   
+   
+ -------------------------------------------
+ Method overriding new concept: 
+ 
+ Earlier overriding with changing return type only was not possible but now it is possible with the help of covariant return type.
+ 
+ Now it is possible to override method by changing the return type if subclass overrides any method whose return type 
+ is Non-Primitive but it changes its return type to subclass type. 
+ 
+					                      class A{  
+								    		A get()
+										    {return this;}  
+								    }  
+
+								    class B1 extends A{  
+								   		 B1 get(){return this;}  
+								    		 void message(){System.out.println("welcome to covariant return type");}
+										 
+							              public static void main(String args[]){  
+								          	new B1().get().message();  
+								    	}  
+								 }  
+ ----------------------------------------------------------------------------------------------------------------------------------
+      
+  super keyword:
+		   a) super can be used to refer immediate parent class instance variable.
+		   b) super can be used to invoke immediate parent class method.
+		   c) super() can be used to invoke immediate parent class constructor.
+
+  Points to Note:  a) super() is added in each constructor of class  as first statement automatically by compiler if there is no super().
+
+
+
+      
+ 
+ 
+this keyword:
+ 	           a) this can be used to refer current class instance variable.
+		   b) this can be used to invoke current class method.(here this is implied ,no need to write explicitly)
+		   c) this() can be used to invoke current class constructor.
+      
+     Points to Note:  a) this() should be first statement in class' constructor.
+
+     RULES OF CALLING inside constructor:
+              First constructor is called --->>> then super() --->> then instance initializer --->>then this() --->> and then rest part of constructor.
+     	      SO we cannot misplace them if calling explicitly.
+
+
+ ---------------------------------------------------------------------------------------------------------------------------
+      
+ Instance initializer block: 
+			     It is used to initialize the instance data member. 
+			     It run each time when object of the class is created.
+
+    Question : Why use instance initializer block?  
+    Answer : If we have to perform some extra operations while assigning value to instance data member e.g. a for loop to fill a
+             complex array or error handling etc. 
+      
+      
+      
+      
+      Question: Which run first constructor or instance or instance initializer block 
+      Answer :  step1 : instance initializer block is place inside class' constructor after super() that is defaultly addded 
+                        by compiler as first statment inside any class' constructor
+                step2 : first constructor is called ==>> then super()==> and finally instance initializer block.
+		
+      eg.        class Bike8{  
+				int speed;  
+				Bike8(){System.out.println("constructor is invoked");}  
+				{System.out.println("instance initializer block invoked");}  
+				public static void main(String args[]){  
+				Bike8 b1=new Bike8();  
+				Bike8 b2=new Bike8();  
+				}      
+    		}  
+
+
+
+
+			It seems that instance initializer block run first but actually NO.
+			
+	           		Output:instance initializer block invoked
+				       constructor is invoked
+				       instance initializer block invoked
+				       constructor is invoked
+
+      
+      
+      
+      
+      
+  RULES : There are mainly three rules for the instance initializer block. They are as follows:
+
+    The instance initializer block is created when instance of the class is created.
+    The instance initializer block is invoked after the parent class constructor is invoked (i.e. after super() constructor call).
+    The instance initializer block comes in the order in which they appear.
+
+
+      
+  RULES OF CALLING inside constructor:
+     First constructor is called --->>> then super() --->> then instance initializer --->>then this() --->> and then rest part of constructor.
+     SO we cannot misplace them if calling explicitly.
+     
+     
+     
+     
+     
+     
+     
+     
+     
+               eg.
+	        		 class A{
+					A(){
+						System.out.println("parent class constructor invoked");
+					}
+				  }
+
+				class B3 extends A{
+					B3(){
+					 System.out.println("child class constructor invoked");
+					}
+
+					B3(int a){
+					   super();
+					   this();
+					   System.out.println("child class constructor invoked "+a);
+					}
+
+					{
+					    System.out.println("instance initializer block is invoked");
+					}
+
+				        public static void main(String args[])
+					{
+					   B3 b1=new B3();
+					   B3 b2=new B3(10);
+					}
+				   }
+
+	       
+	                        ///output 
+		                        parent class constructor invoked
+					instance initializer block is invoked
+					child class constructor invoked
+					parent class constructor invoked
+					instance initializer block is invoked
+					child class constructor invoked
+					child class constructor invoked 10
+ ------------------------------------------------------------------------------------------------------------------------
+ 
+ final keyword:
+  . 1) Final can be:
+                 variable  :   If you make any variable as final, you cannot change the value of final variable(It will be constant).
+                 method   : If you make any method as final, you cannot override it.
+                 class   : If you make any class as final, you cannot extend it.
+		 
+		 
+    
+Q) Is final method inherited?
+Ans) Yes, final method is inherited but you cannot override it. For Example: 
+ 
+Q) What is blank or uninitialized final variable?
+Ans) A final variable that is not initialized at the time of declaration is known as blank final variable.
+     If you want to create a variable that is initialized at the time of creating object and once initialized may not 
+     be changed, it is useful. 
+     We can initialize  blank final variable only in constructor.
+ 
+Q) static blank final variable:==>>> initialized in static block
+
+Q) Can we declare a constructor final?
+Answer: No becasue is never inherited.
+	Constructor can not be static , final,virtual(in c++).
+
+ ------------------------------------------------------------------------------------------------------------------------
+ 
+ Polymorphism:
+     1) concept by which we can perform a single action in different ways
+     2) Compile time (function overloading and operator overloading(in c++ , not in java becoz no such concept in java))
+     3) Run time(overriding,upcasting,downcasting,no concept of pointer in java so no base class pointer is used like c++)
+     4) A method is overridden, not the data members, so runtime polymorphism can't be achieved by data members. 
+     4) Dynamic Method Dispatch is another name for runntime polymorphism.
+     
+	eg.
+	    Java Runtime Polymorphism with Multilevel Inheritance
+	    
+					class Animal{  
+						    void eat(){System.out.println("eating");}  
+				          }  
+			      
+			                class Dog extends Animal{  
+						    void eat(){System.out.println("eating fruits");}  
+						 }  
+						   
+			                 class BabyDog extends Dog{  
+						    void eat(){System.out.println("drinking milk");}  
+						    public static void main(String args[]){  
+								    Animal a1,a2,a3;  
+								    a1=new Animal();   //// upcasting
+								    a2=new Dog();  
+								    a3=new BabyDog();  
+								    a1.eat();  
+								    a2.eat();  
+								    a3.eat();  
+						    	}  
+			                     }  
+ 
+ 
+     
+ -------------------------------------------------------------------------------------------------------------------------
+ Static binding : When type of object is determined at compile time.
+                  Also  known as Early binding.
+		  Compile time polymorphism.
+		  Method overloading
+		
+Dynamic binding  : When type of object is determined at compile time.		
+		   Also  known as Late binding.
+		   Run time polymorphism.
+                   Method overriding
+ -------------------------------------------------------------------------------------------------------------------
+ 
+ instanceof operator:(checking instance and Also can be used for and downcastng.)
+ 
+ eg.
+     class Animal{}  
+    class Dog1 extends Animal{ 
+      
+     public static void main(String args[]){  
+     Dog1 d=new Dog1(); 
+     Dog1 s = NULL;
+     System.out.println(d instanceof Animal);     //true  /// child's object is also an instance of parent.
+     System.out.println(d instanceof Dog1);    //true  
+     System.out.println(s instanceof Dog1);    //false  // if null then false 
+     }  
+    }  
+ 
+ -------------------------------------------------------------------------------------------------------------------------
+ Abstraction is a process of hiding the implementation details and showing only functionality to the user.
+ 
+ eg.  sending SMS where you type the text and send the message. You don't know the internal processing about the message delivery.
+ 
+ 
+ Ways to achieve abstraction:
+          Interface 
+	  Abstract Class
+	  
+	  
+ Abstract classes:(Points to remember)       
+		    An abstract class must be declared with an abstract keyword.(Not available abstract keyword in c++)
+		    It can have abstract or non-abstract methods or both(But it is compulsory to be declared with abstract keyword for becoming abstarct class).
+		    (But In c++ there is no keyword abstract but we can say a class abstract only when it has atleast one was pure virtual method)
+		    
+		    It cannot be instantiated.(Also in c++)
+		    It can have constructors and final ,static methods also.(Also in c++ but in c++ final keyword does not exists)
+		    If we do not override the abstract method (pure virtual function) in derived class, then derived class also becomes abstract class.(Also in c++)
+		    
+		   
+ 
+ 
+ eg. 
+ 
+		   abstract class Bike{  
+		             Bike(){System.out.println("bike is created");}  
+		             abstract void run();  
+		             void changeGear(){System.out.println("gear changed");}  
+		     }  
+		 
+		 class Honda extends Bike{  
+		          void run(){System.out.println("running safely..");}  
+		 }  
+		
+		 class TestAbstraction2{  
+		        public static void main(String args[]){
+			Bike obj = new Bike();                   // abstact class cannot be instantiated so error
+		        Bike obj = new Honda();                  // constructor of Honda class is called then super is called i.e. constructor of parent class that is abstract class.
+		        obj.run();  
+		        obj.changeGear();  
+		       }  
+		 }  
+		    
+		    
+		    
+		    
+----------------------------------------	
+Another use of abstract class(In case of interface): It gives us power to not implement all abstract methods of interface.
+ -------------------------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ Interace : 
+       1) can have abstract and non-method methods.
+       2) If there is non-abstract method then that method should also use default keyword but now this method cannot overridden in the class that implments that interface.
+       3) OR If there is non-abstract method then that method should also use static keyword and access as [ interface_name.static_method_name() ] but now this method can be overridden in the class that implments that interface.
+       4) Interface also can  not be instantiated.
+       5)  Interface fields are public, static and final by default, and the methods are public and abstract by default.
+       6) Any class that implements interface , should implement all abstract methods.
+          If this class does not do so then that class should use abstract keyword and become abstract class.
+	  Now if any class extends this abstract class then that derived class should implement atleast all those abstract method that has not been implemented by parent class.  
+	  
+       
+       
+      
+      
+      
+ Question)  Why use Java interface?
+     Answer)             There are mainly three reasons to use interface. They are given below.
+				    It is used to achieve abstraction.
+				    By interface, we can support the functionality of multiple inheritance.
+				    It can be used to achieve loose coupling.
+
+      
+      
+      
+       
+       
+       
+ Q) Multiple inheritance is not supported through class in java, but it is possible by an interface, why?
+ Answer)            	
+ 			  interface Printable{  
+			    		void print();  
+			    }  
+			    
+			    interface Showable{  
+			    		void print();  
+			    }  
+
+			    class TestInterface3 implements Printable, Showable{  
+						    public void print(){System.out.println("Hello");}  
+						    public static void main(String args[]){  
+						    TestInterface3 obj = new TestInterface3();  
+						    obj.print();  
+			     }  
+			   }  
+
+
+
+
+
+
+
+example of rule 6:) 
+				    interface A{  
+					    void a();  
+					    void b();  
+					    void c();  
+					    void d();  
+				    }  
+
+				    abstract class B implements A{  
+				    	public void c(){System.out.println("I am c");}  
+				    }  
+
+				    class M extends B{  
+					    public void a(){System.out.println("I am a");}  
+					    public void b(){System.out.println("I am b");}  
+					    public void d(){System.out.println("I am d");}  
+				    }  
+
+				    class Test5{  
+					    public static void main(String args[]){  
+					    A a=new M();  
+					    a.a();  
+					    a.b();  
+					    a.c();  
+					    a.d();  
+				    	}
+				    }
+				    
+				    
+				   
+Interface inheritance:
+
+            interface Printable{  
+		    void print();  
+		  }  
+            interface Showable extends Printable{  
+		    void show();  
+		 }  
+		    class TestInterface4 implements Showable{  
+			    public void print(){System.out.println("Hello");}  
+			    public void show(){System.out.println("Welcome");}  
+
+			    public static void main(String args[]){  
+				    TestInterface4 obj = new TestInterface4();  
+				    obj.print();  
+				    obj.show();  
+		   	  }  
+		    }  
+				    
+				
+
+
+
+
+example) static method in interface
+
+
+						     interface Drawable{  
+							    void draw();  
+							    static int cube(int x){return x*x*x;}  
+							  }  
+							    class Rectangle implements Drawable{  
+							    	public void draw(){System.out.println("drawing rectangle");}  
+							    }  
+
+							    class TestInterfaceStatic{  
+							    	public static void main(String args[]){  
+							    		Drawable d=new Rectangle();  
+							   		 d.draw();  
+							    		System.out.println(Drawable.cube(3));  
+				    				}
+							}  
+
+
+
+Question)  What is marker or tagged interface?
+Answer) An interface which has no member is known as a marker or tagged interface, for example, Serializable, Cloneable, Remote, etc.
+	
+	public interface Serializable{  
+         }  
+	 
+	 
+	 ---------------------------------------------------------------------------------------------------
+	 
+	 Abstract class	                                                                                    Interface
+1) Abstract class can have abstract and non-abstract methods.	                       Interface can have only abstract methods. Since Java 8, it can have default and static methods also.
+2) Abstract class doesn't support multiple inheritance.	                               Interface supports multiple inheritance.
+3) Abstract class can have final, non-final, static and non-static variables.	     Interface has only static and final variables.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Accessing static variable: class_name.static_variable_or_method  --->> in java
+                           class_name::static_variable_or_method -->> in c++
+
+--------------------------------------------------------------------------------------------------------------------
+
+We can inherit and overload and override static methods but they cannot be overriden to be non-static(it means when we override static method in child class then it should also be static else it cannot be overriden),in Java and c++.
+Main method can also be overloaded but cannot be overidden.
+Final methods can overloaded and inherited but cannot be overridden in java.
+Constructors and destuctors are not members of classes and only members are inherited. You cannot inherit a constructor/destructor.
+Constructor can overloaded but cannot overriden. 
+Constructor cannot be final, because it can't be inherited/overridden. 
+Constructor cannot be static.
+Constructor cannot be abstract.
+constructor can be private (concept of friend function in c++ => when we want to initiate object by only friend class and not by any other else)
+
+
+
+Destructor can not be overloaded but can be overidden---->>>>  you can have virtual destructors, and the only reason is to override them in derived classes.(in c++)
+
+---------------------------------------------------------------------------------------------------------------
+
+
+Question) Can abstract class have constructor?
+Answer) Yes, an abstract class can have a constructor in Java. You can either explicitly provide a constructor to abstract class
+or if you don't, the compiler will add default constructor of no argument in abstract class. 
+This is true for all classes and it also applies to an abstract class.
+             But it's constuctor is called by child class' constructor's super() method because abstract method cannot be instantiated.
+
+--------------------------------------------------------------------------------------------------------------------------
