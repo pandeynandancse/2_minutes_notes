@@ -1512,4 +1512,21 @@ Why Inline Function????
 
 Mutable and Volatile
 
+--------------------------------------------------------------------------------------------------------------------------------
 
+
+Copy constructor:  
+                   1) As we copy int value by assignment operator--
+                                        int a =5;
+                                        int b= a;  /// copied 
+
+      
+                   2) we copy string as follows:
+                                  string s1 = "nandan";
+                                  string s2;
+                                  strcpy(s2,s1) /////string copied into s2 from s1
+                                  
+                                  
+                                  
+                   3) So how to copy object values to another object----
+                             Here comes concept of copy constructor.
