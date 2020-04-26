@@ -785,7 +785,7 @@ Answer: No becasue is never inherited.
 
  ------------------------------------------------------------------------------------------------------------------------
  
- Polymorphism:
+ Polymorphism:(many forms => one lady acts as mother , daughter,wife,etcc... )
      1) concept by which we can perform a single action in different ways
      2) Compile time (function overloading and operator overloading(in c++ , not in java becoz no such concept in java))
      3) Run time(overriding,upcasting,downcasting,no concept of pointer in java so no base class pointer is used like c++)
@@ -847,6 +847,7 @@ Dynamic binding  : When type of object is determined at compile time.
  
  -------------------------------------------------------------------------------------------------------------------------
  Abstraction is a process of hiding the implementation details and showing only functionality to the user.
+ Abstraction tells what object does instead of how it does.
  
  eg.  sending SMS where you type the text and send the message. You don't know the internal processing about the message delivery.
  
@@ -1056,9 +1057,9 @@ Constructor cannot be abstract.
 constructor can be private (concept of friend function in c++ => when we want to initiate object by only friend class and not by any other else)
 
 
-
+Final class cannot be extended.
 Destructor can not be overloaded but can be overidden---->>>>  you can have virtual destructors, and the only reason is to override them in derived classes.(in c++)
-
+Note: A class cannot be private or protected except nested class.
 ---------------------------------------------------------------------------------------------------------------
 
 
@@ -1069,3 +1070,1001 @@ This is true for all classes and it also applies to an abstract class.
              But it's constuctor is called by child class' constructor's super() method because abstract method cannot be instantiated.
 
 --------------------------------------------------------------------------------------------------------------------------
+
+Package:
+         A java package is a group of similar types of classes, interfaces and sub-packages.
+
+Why package??
+       Java package provides access protection.
+       Java package removes naming collision.(namespace is used in c++)
+      
+ eg) 
+			     //save as Simple.java  
+			    package mypack;  
+			    public class Simple{  
+			     public static void main(String args[]){  
+				System.out.println("Welcome to package");  
+			       }  
+			    }  
+			    
+			    
+			         To Compile: javac -d . Simple.java  /// compiled and generated Simple.class file in same folder  becuase there is dot.  
+                                 To Run: java mypack.Simple       so for run package_name.class_name
+
+                                 Output:Welcome to package
+
+       			-------------------------------------------------------------------------------------
+            BUT WHAT IF WE DID NOT STORE CLASS FILE IN SAME FOLDER OF JAVA SOURCE FILE-->>> (SEE BELOW)-->consider my source java file is in folder e:/sources:
+			e:\sources> javac -d c:\classes Simple.java
+		
+		To run this program from e:\source directory, you need to set classpath of the directory where the class file resides.
+		e:\sources> set classpath=c:\classes;.;
+		e:\sources> java mypack.Simple
+		   -------------------------------------------------------------------------------------------------------                   
+
+
+Question) How to access package from another package?
+
+Answer) There are three ways to access the package from outside the package.
+	  The import keyword is used to make the classes and interface of another package accessible to the current package.
+          a) import package.* ===>>> If you use package.* then all the classes and interfaces of this package will be accessible but not subpackages. 
+	  b) import package.classname ==>> If you import package.classname then only declared class of this package will be accessible.
+          c) fully qualified name>>>(in c++ we used namespace for naming collision)
+	                      Now there is no need to import. But you need to use fully qualified name every time when you are accessing the class or interface.
+                              It is generally used when two packages have same class name e.g. java.util and java.sql packages contain Date class.
+
+
+
+
+
+        eg) Example of package by import fully qualified name
+
+			    //save by A.java  
+			    package pack;  
+			    public class A{  
+			      public void msg(){System.out.println("Hello");}  
+			    }  
+
+			    //save by B.java  
+			    package mypack;  
+			    class B{  
+			      public static void main(String args[]){  
+			       pack.A obj = new pack.A();//using fully qualified name  
+			       obj.msg();  
+			      }  
+			    }  
+
+
+                        ///// hello
+			
+			
+			
+			---------------------------------------------------------------
+			Note: If you import a package, subpackages will not be imported.
+			---------------------------------------------------------------
+	  There can be only one public class in a java source file and that file must be saved by the public class name.
+	  ----------------------------------------------------------------------------------------------------------
+Subpackage in java:
+	Let's take an example, Sun Microsystem has definded a package named java that contains many classes like System, 
+	String, Reader, Writer, Socket etc. These classes represent a particular group e.g. Reader and Writer classes are
+	for Input/Output operation, Socket and ServerSocket classes are for networking etc and so on.
+	So, Sun has subcategorized the java package into subpackages such as lang, net, io etc. and put the Input/Output
+	related classes in io package, Server and ServerSocket classes in net packages and so on.
+	 
+	 
+----------------------------------------------------------------------------------------------------------------------------------
+
+Access Modifier:
+  Access Modifier	within class	within package	outside package by subclass only	outside package
+    Private	               Y	       N	            N	                                N
+    Default	               Y	       Y	            N	                                N
+   Protected	               Y	       Y	            Y	                                N
+    Public	               Y	       Y	            Y	                                Y
+    
+    
+    
+    
+    eg.) private:
+             class A{  
+		    private int data=40;  
+		    private void msg(){System.out.println("Hello java");}  
+		    }  
+
+		    public class Simple{  
+		     public static void main(String args[]){  
+		       A obj=new A();  
+		       System.out.println(obj.data);//Compile Time Error  
+		       obj.msg();//Compile Time Error  
+		       }  
+		    }
+		    
+		    
+		    
+		    
+	eg) default:(If you don't use any modifier, it is treated as default by default.)
+	
+			  /// save by A.java
+			       package pack;  
+				    class A{  
+				      void msg(){System.out.println("Hello");}  
+				    }  
+
+			    //save by B.java  
+			    package mypack;  
+			    import pack.*;  
+			    class B{  
+			      public static void main(String args[]){  
+			       A obj = new A();//Compile Time Error  
+			       obj.msg();//Compile Time Error  
+			      }  
+			    }  
+			    
+			    
+			    
+			    
+			    
+		eg) protected:
+		   
+		        //save by A.java  
+			    package pack;  
+			    public class A{  
+			    protected void msg(){System.out.println("Hello");}  
+			    }  
+
+			    //save by B.java  
+			    package mypack;  
+			    import pack.*;  
+
+			    class B extends A{  
+			      public static void main(String args[]){  
+			       B obj = new B();  
+			       obj.msg();  
+			      }  
+			    }  
+		
+		
+		
+		
+		
+		
+		
+		eg) public :
+		
+		          //save by A.java  
+			    package pack;  
+			    public class A{  
+			    public void msg(){System.out.println("Hello");}  
+			    }  
+
+
+			    //save by B.java  
+			    package mypack;  
+			    import pack.*;  
+
+			    class B{  
+			      public static void main(String args[]){  
+			       A obj = new A();  
+			       obj.msg();  
+			      }  
+			    }  
+   ---------------------------------------------------------------------------------------------------------------------
+   
+   
+   Encapsulation in java:
+                          process of wrapping code and data together into a single unit
+			  It is a way to achieve data hiding.
+   			  Getter and setter ==>> read-only and write-only
+			  
+			  
+   Abstraction vs encapsulation : Abstraction is process of hiding implementation details. It tells what object does instead of how it does and done by abstract class and inteface.
+                                  Encapsulation is process of hiding data and code into single unit and done by getter and setter.
+   
+   ------------------------------------------------------------------------------------------------------------------------------
+   
+   
+   Array in java:( *arr is replaced with arr[] or []arr)
+       
+         a) int a[]=new int[5];//declaration and instantiation 
+	 
+	 b)Initialization:	a[0]=10;//initialization  
+				a[1]=20;  
+				a[2]=70;  
+				a[3]=40;  
+				a[4]=50;  
+				
+	c) declaration, instantiation and initialization  ==>>      int a[]={33,3,4,5};
+	d)  returning array from function:(return type should be int[] ,
+	                                   in c++ it should be pointer as int* and if array is local to function then it should be static to be returned becoz c++ does not allow to return the address of local variable. )
+	       
+	       
+	       example) 
+	       class TestReturnArray{  
+			//creating method which returns an array  
+			static int[] get(){             ///// here static is used because we are accessing this method from static method.
+			return new int[]{10,30,50,90,60};  
+			}  
+
+			public static void main(String args[]){  
+			//calling method which returns an array  
+			int arr[]=get();  
+			//printing the values of an array  
+			for(int i=0;i<arr.length;i++)  
+			System.out.println(arr[i]);  
+			}}  
+	
+	
+	e) Multi dimensional array:
+	            dataType[][] arrayRefVar; (or)  
+		    dataType [][]arrayRefVar; (or)  
+		    dataType arrayRefVar[][]; (or)  
+		    dataType []arrayRefVar[];   
+		    
+		    
+		
+        f) jagged array:
+	             When array has different number of columns for each row. 
+		     eg.1 2 3
+		        1 5 
+			1 2 5 8 
+			
+			
+			
+------------------------------------------------------------------------------------------------------------------------
+
+Object class:   Top most class -->> parent class of all classes in java.
+                The Object class is beneficial if you want to refer any object whose type you don't know. Notice that parent class reference variable can refer the child class object, know as upcasting.
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Object cloning: (In c++ it was copy constructor)
+
+                Cloneable interface must be implemented by the class whose object clone we want to create. 
+		If we don't implement Cloneable interface, clone() method generates CloneNotSupportedException.
+		Clone() is the fastest way to copy array.
+		
+		
+		example) 
+		            class Student18 implements Cloneable{  
+						    int rollno;  
+						    String name;  
+
+						    Student18(int rollno,String name){  
+						    this.rollno=rollno;  
+						    this.name=name;  
+						    }  
+
+						    public Object clone()throws CloneNotSupportedException{  
+						    return super.clone();  
+						    }  
+
+						    public static void main(String args[]){  
+						    try{  
+						    Student18 s1=new Student18(101,"amit");  
+
+						    Student18 s2=(Student18)s1.clone();  
+
+						    System.out.println(s1.rollno+" "+s1.name);  
+						    System.out.println(s2.rollno+" "+s2.name);  
+
+						    }catch(CloneNotSupportedException c){}  
+
+						    }  
+						    }  
+
+						Test it Now
+
+						Output:101 amit
+						       101 amit
+
+		
+		
+		
+-----------------------------------------------------------------------------------------------------------------------------		
+		
+Wrapper class: (Autoboxing and  Unboxing)
+                                          Primitive Type      Wrapper class
+						boolean	         Boolean
+						char	        Character
+						byte	          Byte
+						short	         Short
+						int	        Integer
+						long	         Long
+						float	         Float
+						double	        Double
+
+Autoboxing :automatic conversion from primitive data type to wrapper class 
+example) 		
+		  public class WrapperExample1{  
+			public static void main(String args[]){  
+			//Converting int into Integer  
+			int a=20;  
+			Integer i=Integer.valueOf(a);                          //converting int into Integer explicitly  
+			Integer j=a;                         //autoboxing, now compiler will write Integer.valueOf(a) internally  
+
+			System.out.println(a+" "+i+" "+j);  
+			}}  
+
+
+		
+	
+Unboxing : automatic conversion from wrapper class to  primitive data type
+	example)
+				public class WrapperExample2{    
+					public static void main(String args[]){    
+					//Converting Integer to int    
+					Integer a=new Integer(3);    
+					int i=a.intValue();//converting Integer to int explicitly  
+					int j=a;//unboxing, now compiler will write a.intValue() internally    
+
+					System.out.println(a+" "+i+" "+j);    
+				}}    
+		
+		
+---------------------------------------------------------------------------------------------------------------------		
+In java there is only call by value, not call by reference because java does not supports pointer.
+-----------------------------------------------------------------------------------------------------------
+strictfp keyword:
+      Java strictfp keyword ensures that you will get the same result on every platform if you perform operations in the floating-point variable. 
+      The precision may differ from platform to platform that is why java programming language have provided the strictfp keyword, so that you get same result on every platform. 
+      
+    ---->>>>  strictfp keyword can be applied on methods, classes and interfaces.
+    ---->>>   The strictfp keyword cannot be applied on abstract methods, variables or constructors.
+    
+    
+    
+  ------------------------------------------------------------------------------------------------------------------
+  
+  javadoc tool:
+            a) We can create document api in java by the help of javadoc tool.
+	    b) In the java file, we must use the documentation comment /**... */ 
+	    c) To create the document API(There is no need to compile the javafile) : 
+	            -->>    On the command prompt, you need to write:
+				      javadoc M.java  
+				   where M.java is file name whose doc api has to created.
+				   
+	            --->>  Now, there will be created a lot of html files. Open the index.html file to get the information about the classes.
+				      
+-----------------------------------------------------------------------------------------------------------------------------
+
+command line argument:
+   
+			   class A{  
+					public static void main(String args[]){  
+
+					for(int i=0;i<args.length;i++)  
+					System.out.println(args[i]);  
+
+					 }  
+					}  
+
+
+					     compile by > javac A.java  
+					    run by > java A sonoo jaiswal 1 3 abc  
+
+                       ///output :     sonoo
+				       jaiswal
+				       1
+				       3
+				       abc
+--------------------------------------------------------------------------------------------------------------------------------
+Class vs Object:
+
+    eg.   Class: Human Object: Man, Woman
+eg .     Class: Fruit Object: Apple, Banana, Mango, Guava wtc.
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Strings in java:
+      a) There are two ways to create String object:
+				    i)  By string literal
+				   ii)  By new keyword
+
+
+            i) By string literal:  Each time you create a string literal, the JVM checks the "string constant pool" first. 
+	       If the string already exists in the pool, a reference to the pooled instance is returned. 
+	       If the string doesn't exist in the pool, a new string instance is created and placed in the pool. For example:
+
+							   String s1="Welcome";  
+							    String s2="Welcome";    //It doesn't create a new instance  
+			Here s1 and s2 objects are pointing same 'Welcome' that means two objects are sharing 'Welcome'.
+							
+                   ---------------------------------------------------------------
+		   Note: String objects are stored in a special memory area known as the "string constant pool".
+		   ---------------------------------------------------------------
+
+              Question) Why Java uses the concept of String literal?
+	      Answer) To make Java more memory efficient (because no new objects are created if it exists already in the string constant pool).
+
+	      
+
+   
+            ii) By new keyword:(JVM will create a new string object in normal (non-pool) heap memory)
+	    
+	                 public class StringExample{  
+					    public static void main(String args[]){  
+							    String s1="java";                              //creating string by java string literal  
+							    char ch[]={'s','t','r','i','n','g','s'};  
+							    String s2=new String(ch);                          //converting char array to string  
+							    String s3=new String("example");                 //creating java string by new keyword  
+							   String s4=new String("example");        ///// s3 and s4 are pointing different examle that means they are not sharing same 'example' like string literal
+							   System.out.println(s1);  
+							    System.out.println(s2);  
+							    System.out.println(s3);  
+		          			}
+			  }  
+
+ 				      
+				      
+	     
+  
+  
+  b) STRINGS ARE IMMUTABLE: Immutable simply means unmodifiable or unchangeable.
+             eg) 
+	          class Testimmutablestring1{  
+			     public static void main(String args[]){  
+			       String s="Sachin";  
+			       s.concat(" Tendulkar"); 
+			       System.out.println(s);                 ////// Sachin
+			       s=s.concat(" Tendulkar");  
+			       System.out.println(s);               //// Sachin Tendulkar
+			     }  
+			    }  
+  
+  
+   Question) Why string objects are immutable in java?
+Answer) Because java uses the concept of string literal.Suppose there are 5 reference variables,all referes to one 
+        object "sachin".If one reference variable changes the value of the object, it will be affected to all the reference
+	variables. That is why string objects are immutable in java.
+
+      
+		
+	
+c) String Comparison:
+     i) equals() and equalsIgnoreCase()   ==> compares values onlt not references.
+     ii) ==        ===>>>> compares reference and values both.
+     iii) compareTo() ==>>>> 0,1 ,-1 ===> lexicographically checking
+
+
+
+      eg)  String s1="Sachin";  
+	   String s2="Sachin";  
+	   String s3=new String("Sachin");  
+	   String s4="Saurav";  
+	   System.out.println(s1.equals(s2));//true  
+	   System.out.println(s1.equals(s3));//true  
+	   System.out.println(s1.equals(s4));//false  
+
+
+
+       eg) String s1="Sachin";  
+	   String s2="SACHIN";  
+	   System.out.println(s1.equals(s2));//false  
+	   System.out.println(s1.equalsIgnoreCase(s2));//true  
+
+
+
+       eg) String s1="Sachin";  
+	   String s2="Sachin";  
+	   String s3="Ratan";  
+	   System.out.println(s1.compareTo(s2));//0  
+	   System.out.println(s1.compareTo(s3));//1(because s1>s3)  
+	   System.out.println(s3.compareTo(s1));//-1(because s3 < s1 )
+	   
+	   
+	   
+d) String concatenation: 
+      Note: After a string literal(" "), all the + will be treated as string concatenation operator.
+      
+     
+ e) String Buffer class:   used for creating mutable strings
+                Note: Java StringBuffer class is thread-safe i.e. multiple threads cannot access it simultaneously. 
+		      So it is safe and will result in an order. i.e.it is synchronized
+ 
+ 
+ f) StringBuilder class:  also used for creating mutable strings.
+                    Note:  it is non-synchronized.
+ 
+ -----------------------------------------------------------------------
+ Order of effieciency and fastness -> 
+         string < stringbuffer< stringbuilder
+---------------------------------------------------------------------------
+StringBuffer is synchronized i.e. thread safe. It means two threads can't call the methods of StringBuffer simultaneously.
+StringBuilder is non-synchronized i.e. not thread safe. It means two threads can call the methods of StringBuilder simultaneously.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Immutable class:    All the wrapper classes and String class is immutable.
+
+    example)
+                    public final class Employee{  
+				    final String pancardNumber;  
+
+				    public Employee(String pancardNumber){  
+				            this.pancardNumber=pancardNumber;  
+				    }  
+
+				    public String getPancardNumber(){  
+				          return pancardNumber;  
+				    }  
+			 }  
+
+ ------>>>> The above class is immutable because:
+         a)  The instance variable of the class is final i.e. we cannot change the value of it after creating an object.
+         b)  The class is final so we cannot create the subclass.
+         c)  There is no setter methods i.e. we have no option to change the value of the instance variable.
+
+             These points makes this class as immutable.
+ -----------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ Exception Handling:(Throwable class is parent for exceptions and error)
+ a)Checked exception   -->>  The classes which directly inherit Throwable class except RuntimeException and Error are known as checked exceptions
+                          e.g. IOException, SQLException etc. Checked exceptions are checked at compile-time.
+			  
+ b) unchecked exception -->> The classes which inherit RuntimeException are known as unchecked exceptions
+                            e.g. ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException etc.
+			   UNChecked exceptions are checked at run-time.
+			    
+ c) error -->> Error is irrecoverable e.g. OutOfMemoryError, VirtualMachineError,stackoverflowerror etc...
+ 
+ d) try -catch or try - multi catch or try -finally 
+ e) In multi catch --->>>> All catch blocks must be ordered from most specific to most general,
+                          i.e. catch for ArithmeticException must come before catch for Exception.
+ 
+ f) Nested try catch --> Sometimes a situation may arise where a part of a block may cause one error and the entire block itself may cause another error. 
+                          try {
+			       try {
+			           }
+			       catch(){
+				 }
+			    }
+			    catch(){}
+				 
+			  
+g) final block --
+   ---->>>    Rule: For each try block there can be zero or more catch blocks, but max one finally block. 
+   ---->> Note: The finally block will not be executed if program exits(either by calling System.exit() or by causing a fatal 
+                error that causes the process to abort). 
+ 
+ 
+ h) Exception propagation : (propagating exception to backward function to be handled)
+          --->> Rule1: By default Unchecked Exceptions are forwarded in calling chain (propagated).
+	  --->> Rule2: By default, Checked Exceptions are not forwarded in calling chain (propagated). -->> for propagation use throws also .
+ 
+ example)Based on rule 1
+			   class TestExceptionPropagation1{  
+				      void m(){  
+					int data=50/0;  
+				      }  
+				      void n(){  
+					m();  
+				      }  
+				      void p(){  
+				       try{  
+						n();  
+				       }catch(Exception e){System.out.println("exception handled");}  
+				      }  
+			      	public static void main(String args[]){  
+				       TestExceptionPropagation1 obj=new TestExceptionPropagation1();  
+				       obj.p();  
+				       System.out.println("normal flow...");  
+			      	}  
+			    }  
+			    
+			    
+			    ///Output:exception handled
+       				normal flow...
+ 
+ 
+ Explanation : In the above example exception occurs in m() method where it is not handled,so it is propagated to previous n() method 
+ where it is not handled, again it is propagated to p() method where exception is handled.
+ Exception can be handled in any method in call stack either in main() method,p() method,n() method or m() method.
+ 
+  
+  
+  
+  
+  example)Based on rule 2
+			class TestExceptionPropagation2{  
+				      void m(){  
+					throw new java.io.IOException("device error");//checked exception  
+				      }  
+				      void n(){  
+					m();  
+				      }  
+				      void p(){  
+				       try{  
+						n();  
+				       }catch(Exception e){System.out.println("exception handeled");}  
+				      }  
+				      public static void main(String args[]){  
+					       TestExceptionPropagation2 obj=new TestExceptionPropagation2();  
+					       obj.p();  
+					       System.out.println("normal flow");  
+			      		}  
+			      }  
+ 
+                   //////Compilation error
+		   
+		   
+	
+i)throw keyword:
+           throw new IOException("my_message");  
+            
+	    
+	    
+j) throws keyword:
+             -->> The Java throws keyword is used to declare an exception.
+	     --->> using throws checked exception are also propagated.
+	     
+	     
+    Qestion) Which exception should be declared
+    Ans) checked exception only,		   
+		   
+    RULE:  If you are calling a method that declares an exception, you must either caught or declare the exception.
+    
+    eg.) caught exception using try catch--
+             
+	          import java.io.*;  
+			    class M{  
+			     void method()throws IOException{  
+			      throw new IOException("device error");  
+			     }  
+			    }  
+			    public class Testthrows2{  
+			       public static void main(String args[]){  
+				try{  
+				 M m=new M();  
+				 m.method();  
+				}catch(Exception e){System.out.println("exception handled");}     
+
+				System.out.println("normal flow...");  
+			      }  
+			    }  
+			    
+			    
+			    ////Output:exception handled
+                                  normal flow...
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+	    eg) you declare the exception and exception does not occured			  
+				  class M{  
+					 void method()throws IOException{  
+					  System.out.println("device operation performed");  
+					 }  
+					}  
+					class Testthrows3{  
+					   public static void main(String args[])throws IOException{//declare exception  
+					     M m=new M();  
+					     m.method();  
+
+					    System.out.println("normal flow...");  
+					  }  
+					}  
+
+ 
+ 
+                                          
+			    ////Output:exception handled
+                                  normal flow...
+				  
+				  
+				  
+	eg) Program if exception occurs and not handled
+
+				    import java.io.*;  
+				    class M{  
+				     void method()throws IOException{  
+				      throw new IOException("device error");  
+				     }  
+				    }  
+				    class Testthrows4{  
+				       public static void main(String args[])throws IOException{//declare exception  
+					 M m=new M();  
+					 m.method();  
+
+					System.out.println("normal flow...");  
+				      }  
+				    }  
+
+				Output:Runtime Exception
+			  
+		
+		
+		
+		
+
+k) 
+                        throw	                                                              throws
+1)	Java throw keyword is used to explicitly throw an exception.	Java throws keyword is used to declare an exception.
+2)	Checked exception cannot be propagated using throw only.	Checked exception can be propagated with throws.
+
+3)	Throw is used within the method.	                              Throws is used with the method signature.
+4)	You cannot throw multiple exceptions.	                              You can declare multiple exceptions e.g.
+                                                                           public void method()throws IOException,SQLException.                                
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ l) final -->> keyword   -->> with class(No inheirtance), with variable(variable value cannot be changed once assigned), with method(no overriden)
+    finally ->> block -->> in exception handling -->> always executed either excepton is handled or not -->>it is not excuted only if program exits by system.exit()
+    finalize -->> it is method -->> Finalize is used to perform clean up processing just before object is garbage collected. 
+    
+    eg)     class FinalizeExample{  
+			    public void finalize(){System.out.println("finalize called");}  
+			    public static void main(String[] args){  
+			    FinalizeExample f1=new FinalizeExample();  
+			    FinalizeExample f2=new FinalizeExample();  
+			    f1=null;  
+			    f2=null;  
+			    System.gc();  
+			    }}  
+			    
+			    
+			  
+			  
+			  
+			  
+
+m) creating your own exception : (By extending Exception class)==>> If your class throw new kind of exception then that new kind of exception should extend Exception class .
+
+
+             class InvalidAgeException extends Exception{  
+		     InvalidAgeException(String s){  
+			      super(s);  
+		     }  
+	      }  
+
+	    class TestCustomException1{  
+	       static void validate(int age)throws InvalidAgeException{  
+		 if(age<18)  
+		  throw new InvalidAgeException("not valid");  
+		 else  
+		  System.out.println("welcome to vote");  
+	       }  
+         
+	       public static void main(String args[]){  
+		  try{  
+		  validate(13);  
+		  }catch(Exception m){System.out.println("Exception occured: "+m);}  
+
+		  System.out.println("rest of the code...");  
+	      }  
+	    }  
+    
+    
+    ////output:
+		    Exception occured: InvalidAgeException:not valid
+		       rest of the code...
+		       
+		       
+		       
+		       
+		       
+		       
+		       
+		       
+		       
+n) exception handling with method overriding
+------------------------------------------------------------------------------------------------------------------------
+
+Java Multithreading: 
+      -->> process of executing multiple threads simultaneously.
+      -->> A thread is a lightweight sub-process, the smallest unit of processing. 
+      -->> Multiprocessing and multithreading, both are used to achieve multitasking.
+      -->> However, we use multithreading than multiprocessing because threads use a shared memory area. 
+           They don't allocate separate memory area so saves memory, and context-switching between the threads takes less time
+	   than process. 
+      --> Threads are independent, so it doesn't affect other threads if an exception occurs in a single thread.
+      
+      
+     
+     
+ Life cycle of a thread: --> It is controlled by JVM
+       -->> New          -->> when you create an instance of Thread class but before the invocation of start() method. 
+       -->> runnable     -->> The thread is in runnable state after invocation of start() method, 
+                              but the thread scheduler has not selected it to be the running thread. 
+       -->> running             
+       -->> blocked      -->> when the thread is still alive, but is currently not eligible to run.
+       -->> Terminated   -->> A thread is in terminated or dead state when its run() method exits. 
+
+
+
+
+
+Creating thread:
+		a) There are two ways to create a thread:
+  			 i)  By extending Thread class
+    			 ii) By implementing Runnable interface.
+                
+		b) Commonly used Constructors of Thread class:
+				    Thread()
+				    Thread(String name)
+				    Thread(Runnable r)
+				    Thread(Runnable r,String name)
+
+		c) Commmonly used methods of Thread class:
+		                    run() 
+				    start()
+				    sleep(milliseconds)
+				    join()                       //// stops all other thread except the thread which invokes this method
+				    join(milliseconds) 
+				    getPriority()               /// gives priority of thread
+				    setPriority()
+				    getName()                  //// gives name of current thread
+				    setName()                  /// set name of current thread
+				    isAlive()
+				    setDaemon()               ./// thread is set as daemon thread
+				    isDaemon()
+
+
+                 d) Runnable interface has only one method :
+		                    run()
+		 
+
+
+
+
+
+Creating thread by extending Thread class:
+		      class Multi extends Thread{  
+				    public void run(){  
+					    System.out.println("thread is running...");  
+				    }  
+				    public static void main(String args[]){  
+					    Multi t1=new Multi();  
+					    t1.start();  
+				     }  
+		      }  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Creating thread by implementing Runnable Interface:
+ 
+                     class Multi3 implements Runnable{  
+					    public void run(){  
+					    	System.out.println("thread is running...");  
+					    }  
+
+					    public static void main(String args[]){  
+						    Multi3 m1=new Multi3();  
+						    Thread t1 =new Thread(m1);  
+						    t1.start();  
+					     }  
+			    }  
+
+
+
+
+
+
+
+Thread Scheduler:
+        -->> Thread scheduler in java is the part of the JVM that decides which thread should run.
+	-->> There is no guarantee that which runnable thread will be chosen to run by the thread scheduler.
+	-->> Only one thread at a time can run in a single process.
+	-->> Uses preemptive scheduling and timeslicing scheduling algorithm
+	
+	
+	
+	
+	
+	
+	
+sleeping a thread: Thread.sleep(milliseconds)
+     ---->>> As you know well that at a time only one thread is executed. 
+             If you sleep a thread for the specified time,the thread shedular picks up another thread and so on. 
+
+
+
+
+
+
+
+
+Question) Can we start a thread twice????
+Answer) No. After starting a thread, it can never be started again. If you does so, an IllegalThreadStateException is thrown.
+example)   t1.start();  
+           t1.start();      //exception occured
+
+
+
+	
+	
+	
+	
+	
+
+Question)  What if we call run() method directly instead start() method????
+Answer)  -->>  Each thread starts in a separate call stack when we invoke start() but Invoking the run() method from main thread,
+               the run() method goes onto the current call stack rather than at the beginning of a new call stack.
+
+example)
+			    class TestCallRun2 extends Thread{  
+			     public void run(){  
+			      for(int i=1;i<5;i++){  
+				try{Thread.sleep(500);}catch(InterruptedException e){System.out.println(e);}  
+				System.out.println(i);  
+			      }  
+			     }  
+			     public static void main(String args[]){  
+			      TestCallRun2 t1=new TestCallRun2();  
+			      TestCallRun2 t2=new TestCallRun2();  
+
+			      t1.run();  
+			      t2.run();  
+			     }  
+			    }  
+			    
+			    
+			    Output:    1
+				       2
+				       3
+				       4
+				       5
+				       1
+				       2
+				       3
+				       4
+				       5
+				       
+As you can see in the above program that there is no context-switching because here t1 and t2 will be treated as normal object
+not thread object. 		       
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Joining the thread:
+     -->> The thread which invokes the join(milliseconds) method is executed alone for given time  period and after 
+          that all threads can perfrom simulataneously. 
+
+
+
+
+
+
+Renaming thread:
+  -->>  t1.start();  
+        t2.start();  
+  t1.setName("nandan");  
+  t2.getName();
+  
+  
+  
+  
+  
+ Priority of a thread:
+     -->>> t1.setPriority(Thread.MIN_PRIORITY);    /// Thread.MIN_PRIORITY =0; Thread.MAX_PRIORITY =10,
+     --->>Thread.currentThread().getPriority()
+     -->>Thread.currentThread().getName()
+     
+     
+     
+     
+     
+  Daemon thread :
+         
+  
+  
+  
+   
