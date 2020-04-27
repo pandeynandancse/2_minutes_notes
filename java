@@ -2062,9 +2062,432 @@ Renaming thread:
      
      
      
+     
+     
   Daemon thread :
-         
+    -->> Daemon thread in java is a service provider thread that provides services to the user thread.
+    -->> Its life depend on the mercy of user threads i.e. when all the user threads dies, JVM terminates this thread automatically.
+    -->> There are many java daemon threads running automatically e.g. gc, finalizer etc.
+
+     -->>first set any thread as daemon then start() else IllegalThreadStateException will occur.
+          eg) t1.setDaemon(true);       
+	      t1.start();    /// ok
+  
+		  t1.start();  
+		  t1.setDaemon(true);//will throw exception here  
+
   
   
   
+  
+  
+  
+  
+  
+  Thread pool:
+       -->> represents a group of worker threads that are waiting for the job and reuse many times.
+       -->> A thread from the thread pool is pulled out and assigned a job by the service provider. 
+            After completion of the job, thread is contained in the thread pool again.
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Thread group:
+     -->> Java provides a convenient way to group multiple threads in a single object. 
+          In such way, we can suspend, resume or interrupt group of threads by a single method call.
+
+example)  
+		public class ThreadGroupDemo implements Runnable{  
+			public void run() {  
+			      System.out.println(Thread.currentThread().getName());  
+			}  
+		       public static void main(String[] args) {  
+			  ThreadGroupDemo runnable = new ThreadGroupDemo();  
+			      ThreadGroup tg1 = new ThreadGroup("Parent ThreadGroup");  
+
+			      Thread t1 = new Thread(tg1, runnable,"one");  
+			      t1.start();  
+			      Thread t2 = new Thread(tg1, runnable,"two");  
+			      t2.start();  
+			      Thread t3 = new Thread(tg1, runnable,"three");  
+			      t3.start();  
+
+			      System.out.println("Thread Group Name: "+tg1.getName());  
+			     tg1.list();  
+
+			}  
+		       }  
+		       
+		       
+		       
+		      
+		      
+		      
+		      
+		      
+		      
+		      
+
+ShutdownHook thread in java:
+          --->>> used to perform cleanup resource or save the state when JVM shuts down normally or abruptly. 
+          --->> So if you want to execute some code before JVM shuts down, use shutdown hook.
+The JVM shuts down when:
+    -->>  user presses ctrl+c on the command prompt
+    -->> System.exit(int) method is invoked
+    -->> user logoff
+    -->> user shutdown etc.
+code:
+   -->> addShutdownHook() method of Runtime class is used to register the thread with the Virtual Machine. 
+   -->> The object of Runtime class can be obtained by calling the static factory method getRuntime(). For example: 
+                               Runtime r = Runtime.getRuntime();
+    -->> Factory method:  The method that returns the instance of a class is known as factory method.	  
+	  
+	  
+example)
+				 class MyThread extends Thread{  
+				public void run(){  
+				    System.out.println("shut down hook task completed..");  
+				}  
+			    }  
+
+			    public class TestShutdown1{  
+			    public static void main(String[] args)throws Exception {  
+
+			    Runtime r=Runtime.getRuntime();  
+			    r.addShutdownHook(new MyThread());  
+
+			    System.out.println("Now main sleeping... press ctrl+c to exit");  
+			    try{Thread.sleep(3000);}catch (Exception e) {}  
+			    }  
+			    }
+			    
+			    
+			
+			
+			    
+example)same Above example by anonymous class:
+						public class TestShutdown2{  
+					    public static void main(String[] args)throws Exception {  
+
+					    Runtime r=Runtime.getRuntime();  
+
+					    r.addShutdownHook(new Thread(){  
+					    public void run(){  
+						System.out.println("shut down hook task completed..");  
+						}  
+					    }  
+					    );  
+
+					    System.out.println("Now main sleeping... press ctrl+c to exit");  
+					    try{Thread.sleep(3000);}catch (Exception e) {}  
+					    }  
+					    }  
+					    
+
+
+
+
+
+
+
+
+
+
+Single task by multiple thread:
+      
+                class TestMultitasking1 extends Thread{  
+				     public void run(){  
+				       System.out.println("task one");  
+				     }  
+				     public static void main(String args[]){  
+				      TestMultitasking1 t1=new TestMultitasking1();  
+				      TestMultitasking1 t2=new TestMultitasking1();  
+				      TestMultitasking1 t3=new TestMultitasking1();  
+
+				      t1.start();  
+				      t2.start();  
+				      t3.start();  
+				     }  
+				    }  
+				    
+				    
+				    
+				    
+				    
+				    
+Multiple task by mulyiple thread:
+        
+	        class Simple1 extends Thread{  
+			     public void run(){  
+			       System.out.println("task one");  
+			     }  
+			    }  
+
+			    class Simple2 extends Thread{  
+			     public void run(){  
+			       System.out.println("task two");  
+			     }  
+			    }  
+
+			     class TestMultitasking3{  
+			     public static void main(String args[]){  
+			      Simple1 t1=new Simple1();  
+			      Simple2 t2=new Simple2();  
+
+			      t1.start();  
+			      t2.start();  
+			     }  
+			    }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Garbage Collection(GC): --->>automatic and gc() and finalize()
+     -->> garbage means unreferenced objects. 
+     -->> GC is a way to destroy the unused objects.
+     -->> To do so, we were using free() function in C language and delete() in C++. 
+          But, in java it is performed automatically. So, java provides better memory management.
+
+Question) How can an object be unreferenced?
+Answwer) There are many ways:
+			    By nulling the reference
+			    By assigning a reference to another
+			    By anonymous object etc.
+
+		a) By nulling the reference:
+		                  Employee e=new Employee();  
+                                  e=null;
+				  
+				  
+		b) By assigning a reference to another:
+					Employee e1=new Employee();  
+					Employee e2=new Employee();  
+					e1=e2;
+
+
+How actually it works: 
+          Garbage collection is performed by a daemon thread called Garbage Collector(GC) i.e. System.gc()
+	  This thread calls the finalize() method before object is garbage collected.
+	  Note: The Garbage collector of JVM collects only those objects that are created by new keyword. 
+	  So if you have created any object without new, you can use finalize method to perform cleanup processing (destroying remaining objects).
+	  
+	      eg.          Employee e=new Employee();  
+                                  e=null;
+				  System.gc()
+				  
+	  Note: Neither finalization nor garbage collection is guaranteed.
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+--------------------------------------------------------------------------------------------------------------------------------	  
+
+Synchronization in java:
+        -->>  control the access of multiple threads to any shared resource.
+
+There are two types of thread synchronization mutual exclusive and inter-thread communication.
+		   a) Mutual Exclusive
+			   Synchronized method-->> If you declare any method as synchronized, it is known as synchronized method.
+			                      -->> When a thread invokes a synchronized method, it automatically acquires the lock for that object and
+					           releases it when the thread completes its task.
+						   
+			   Synchronized block -->> Suppose you have 50 lines of code in your method, 
+			                           but you want to synchronize only 5 lines, you can use synchronized block.
+						   
+			   Static synchronization -->> static + synchronized
+		    b) Cooperation (Inter-thread communication in java)
+
+
+
+
+
+
+
+interthread communnication : (All methods are of Object class that is parent of all classes in java)
+		a) wait(milliseconds) : Causes current thread to release the lock and wait until either another thread invokes the 
+		                      notify() method or the notifyAll() method for this object, or a specified amount of time has elapsed. 
+		
+		b) notify() : Wakes up a single thread that is waiting on this object's monitor.
+		c)notifyall() ; Wakes up all threads that are waiting on this object's monitor.
+		
+		
+		
+	
+	
+	
+	
+	
+	wait()	                                                               sleep()
+wait() method releases the lock                           	sleep() method doesn't release the lock.
+is the method of Object class                                   	is the method of Thread class
+is the non-static method	                                         is the static method
+should be notified by notify() or notifyAll() methods	       after the specified amount of time, sleep is completed.
+
+
+
+
+
+eg)     class Customer{  
+    int amount=10000;  
+      
+    synchronized void withdraw(int amount){  
+    System.out.println("going to withdraw...");  
+      
+    if(this.amount<amount){  
+    System.out.println("Less balance; waiting for deposit...");  
+    try{wait();}catch(Exception e){}  
+    }  
+    this.amount-=amount;  
+    System.out.println("withdraw completed...");  
+    }  
+      
+    synchronized void deposit(int amount){  
+    System.out.println("going to deposit...");  
+    this.amount+=amount;  
+    System.out.println("deposit completed... ");  
+    notify();  
+    }  
+    }  
+      
+    class Test{  
+    public static void main(String args[]){  
+    final Customer c=new Customer();  
+    new Thread(){  
+    public void run(){c.withdraw(15000);}  
+    }.start();  
+    new Thread(){  
+    public void run(){c.deposit(10000);}  
+    }.start();  
+      
+    }}  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  ------------------------------------------------------------------------------------------------------------------------
+  
+ a) Serailization -->> writing the state of an object into a byte-stream.
+    Deserialization -->>  byte-stream is converted into an object.
+  
+ b) The serialization and deserialization process is platform-independent, 
+    it means you can serialize an object in a platform and deserialize in different platform. 
+  
+ c) Serializable , Cloneable and Remote are marker interfaces (has no data member and method). 
+  
+ d) Whose class' object you want to serialize and deserialize that class must implement Serializable interface.
+  
+ e) Advantages of Java Serialization:-
+	It is mainly used to travel object's state on the network (which is known as marshaling).
+  
+  f) transient keyword:  If you define any data member as transient, it will not be serialized.
+  ------------------------------------------------------------------------------------------------------------------------------
+  
+  
+  JAVA Collection:
+       Iterable interface -- Collection interface  -----List interface
+                                                                  ----ArrayList class
+								  ----Linkedlist class
+								  ----Vector class
+								            -----Stack class
+                                                   
+						   -----Queue interface 
+						                ----Priority Queue  class
+								----Deque interface
+								        ---- LinkedList class
+									---- ArrayDeque class
+						   
+						   -----Set interface
+                                                             ----Hash Set class
+							     ----LinkedHash Set class
+							     ----Sorted Set inteface
+							                ----- Tree Set class
+							
+						   -----Map interface
+                                                             ----Hash Map class
+							     ----LinkedHash Map class
+							     ----Sorted Map inteface
+							                ----- Tree Map class
+  
+  
+  Sample example)
+       ArrayList<String> list=new ArrayList<String>(); 
+	list.add("Ravi"); 
+	list.add("Vijay");  
+	list.add("Ravi");  
+	list.add("Ajay");  
+	
+	Iterator itr=list.iterator();  
+	while(itr.hasNext()){  
+	System.out.println(itr.next());  
+	}  
+	
+	
+
+
+
+
+example)
+          List<String> al=new ArrayList<String>(); 
+	  al.add("Ravi"); 
+	  al.add("Vijay");    
+	  al.add("Ravi");    
+	  al.add("Ajay"); 	
+	  
+	  
+	  
+
+a) List--> can contain duplicate values
+   Set -->> cannot contain duplicate values
+   Map -->> key value pair--->> A Map contains unique keys.
    
+   
+   
+a) ArrayList uses dynammic array vs linked list uses doubly linked list. Both are non-synchronized but maintains insertion order.
+b) Hash set ->  Non- synchronized -> does not maintains insertion order -->null allowed
+ LinkedHashSet -> non-ynchronized -> maintains insertion order -->> null allowed
+ Tree set-->> non-synchronized -> maintains ascending order -> null not allowed
+ 
+c) Queue -->> FIFO is followed 
+   Priority Queue:  FIFO is not followed---priority is mandatory
+   
+   Arraydeque --->> Unlike Queue, we can add or remove elements from both sides.
+               --> null not allowed
+
+
+
+d) Hash Map ->  Non- synchronized -> does not maintains any order -->may have one null key and multiple null values.
+ LinkedHashMap -> non-ynchronized -> maintains insertion order -->> may have one null key and multiple null values.
+ Tree Map-->> non-synchronized -> maintains ascending order -> cannot have a null key but can have multiple null values.
+  
+	  
+e) Hashing is the process of converting an object into an integer value. 	  
+	  
