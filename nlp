@@ -1,0 +1,72 @@
+1) Natural Language processing enables computer to understand and process human languages which include both text and audio.
+
+2) Text Cleaning: 
+       a) Text Standardizatoin : 
+                       Convert to Lower Case
+                       Spelling Correction     : pyspellchecker
+                       
+       b) Eliminate Undesirable Items From Text :
+                      Removing Additional Spaces
+                      Removing Punctuations 
+                      Removing URLs 
+                      Removing Digits 
+                      Removing Stopwords        : from nltk.corpus import stopwords
+                      
+       
+       c)  Convert Non-Words to Words 
+                      Convert Emoji Into Words     : convert emoji into words
+                      
+       d) Convert Negative Word to its Antonyms  :  For instance 'not good’ should be replaced with bad.
+       
+       
+       e) Dealing With Base and Derived Words 
+                     i) Stemming :  Stemming is a rule base technique. 
+                                 :  For instance 'going' and 'gone' will get converted to 'go' but 'went' will not.
+                                 
+                     ii) Lemmatization : Lemmatization is a dictionary based technique so it is slow
+                                         more accurate than stemming.
+                                         lemmatization requires Parts of speech tagging.
+                                         
+                     iii) Parts of Speech (POS) tagging :             nltk.pos_tag()
+                     
+                     
+                     
+ 
+ 3) Text to Numeric Conversion:
+          a) few common NLP vocabulary terms: 
+                       i) Corpus  : Collection of all available textual data is known as corpus. 
+                                  : Corpus text = trainig text + testing text 
+                       
+                       ii) Tokenization: Text is segmented into its smaller parts called tokens. 
+                                          This segmentation process is known as tokenization.
+                                          However tokens can be something else also such as combination of 2 words. 
+                       
+                       iii) Bag of Words (BOW) : It does not consider meaning or context of the word in the document.
+                       
+                       iv) N-Gram : N-grams is a contiguous sequence of n words from a given sample of source text.
+                       
+          
+          b) Conversion : 
+                       i) CountVectorization : converts a collection of text documents to a matrix of token counts. 
+                                               Total no of tokens i.e. vocabulary size will equal to matrix column length where each column represents a token. 
+                                               Number at a cell will indicate count of that token in the record.
+                                               Results in biasing in favour of most frequent words.
+                                               This ends up in ignoring rare words which could have helped is in processing our data more efficiently.
+                     
+                     
+                       ii) TF-IDF Vectorization : In this  we consider overall document weightage of a word.
+                       .                          It helps us in dealing with most frequent words. Using it we can penalize them. 
+                       
+                    
+                    
+          c)  Post Conversion : Both Countvectorization and tf-idf technique produce large size matrix. 
+                              : Use dimension reduction technique.
+                              : Use Truncated SVD:  Performs linear dimensionality reduction by means of truncated singular value decomposition (SVD).
+                                                    It efficiently works on sparse matrices.  
+                                
+                                
+                                
+                                
+                                
+                                
+                                
