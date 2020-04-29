@@ -70,3 +70,39 @@
                                 
                                 
                                 
+4) Advanced text to numeric conversion techniques:
+           a) Word Embedding : also known as Word Vectorization. 
+                             : It means converting word into vector. 
+                             
+           Question) Why we need word embeddings?
+           Answer) A problem with our previous text to numeric conversion techniques was that they ignore synonyms for example 
+                   word 'measure' and ‘calculate’ were represented differently however in most sentences they can be used 
+                   interchangeably.
+                   In Word Embedding similar words are spatially close to each other in vector space. 
+                   Word Embedding is also capable of preserving semantic and syntactic similarity and relation with other words. 
+                   
+                   For instance, by adding a “female” vector to the vector “king”, we obtain the vector “queen” and by 
+                   adding a “plural” vector to the vector “king”, we obtain “kings”.          
+                             
+                   Another problem we observe was of high dimensionality sparse matrix. 
+                   Word Embedding produces low dimensionality dense matrix.          
+                             
+                             
+                             
+             b) Some Common NLP terms:
+                   i) Dimensionality  : Dimensionality refers to the length of vectors. 
+                   ii)  Padding : Padding is task of appending string up to given specific length with whitespaces.
+                                  Padding is used to represent all records as fixed length.          
+                             
+                   iii) Euclidean Distance : Euclidean distance is the shortest distance between two points in (Euclidean) space.
+                   iv) Cosine Similarity :   Cosine similarity is a measure of similarity between two nonzero vectors of an inner product space. 
+                                             It measures the cosine of the angle between them.
+                   
+                  
+                  
+                  
+              
+              c) Word Embedding Techniques: 
+                   i) Word2Vec: 
+                   
+                   
