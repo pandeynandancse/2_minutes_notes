@@ -102,7 +102,82 @@
                   
                   
               
-              c) Word Embedding Techniques: 
-                   i) Word2Vec: 
+              c) Word Embedding Techniques(Word to vector conversion techniques): 
+                   i) Word2Vec: Each unique word in the corpus is assigned a corresponding vector in the space. 
+                              : Relies only on local information of language hence the semantics learnt for a given word is 
+                                only affected by the surrounding words. 
+                              : Drawback of word2vec is its unablity to takecare of OOV word.  
                    
-                   
+                              : 2 flavours: 
+                                       i)  skip-gram : Designed to predict the context from base word.
+                                                     : From a given word, Skip-gram model tries to predict its neighbouring words.
+                                       
+                                       ii) continuous bag of words(CBOW) : Designed to predict the base(target) word from context.
+                                                                           CBOW is faster to train than the skip-gram and gives slightly better accuracy for the frequent words.
+                                       
+                                       eg) jay was hit by a red bus in:(if window =2)
+                                               a) skipgram -->> input:  red  red red red  (4 samples for one input red)
+                                                                outut:  by    a   bus in 
+                                       
+                                               b)CBOW -->> input:   by a bus in (1 sample for input 'by a bus in')
+                                                           output : red
+                                                           
+                                                           
+                                                           
+                                      iii) Negative sampling : Adding some random samples whose target is zero.
+                                                             : example-> for above example in skip gram there is:(converted our model from neural network to logistic regression 
+                                                                         i.e. as classification problem and thus the step that was, project to output vocabulary , that was so costly has been removed)
+                                                                                 
+                                                                                 input   : red red red red red red red 
+                                                                                  output  : by   a  bus  in jay  was hit
+                                                                                  target  : 1    1   1   1   0    0   0 
+                                                                                  
+                                                                                  
+                                                              : It is done because if all targets will be of one class only then learning will be zero 
+                                                                as model will always see only one target and cannnot learn to differentiate.
+                                                           
+                                                           
+                                         
+                                         
+                                         
+                                         
+                                      
+                                      
+                                      
+                                      
+                    ii) GLoVE : Glove embedding technique is based on (first) construction of a co-occurrence matrix from a training corpus 
+                                and then (second) factorization of co-occurrence matrix in order to yield word vector. 
+                    
+                              : Unlike word2vec which captures only local statistics of token Glove captures
+                                both global statistics and local statistics of a text tokens. 
+                              : Its embeddings relate to the probabilities that two words appear together. 
+                    
+                    
+                    iii) FastText : Extension of word2vec library.
+                                  : For previously unseen words, typo errors, and OOV (Out Of Vocabulary) words the model
+                                    can make an educated guess towards its meaning.Obvious trade off is processing time.
+                                   
+                                  : Each word is represented as a bag of character n-grams, so the overall word embedding is 
+                                    a sum of these character n-grams. 
+                                    
+                                  : As a simple example, if we set n=3, the vector for the word “where” would be represented
+                                    by a sum of trigrams: <wh, whe, her, ere, re>  
+                                    
+                                    
+                                    
+                                
+                                     
+                d) Text to Numeric Convertion Using Word Vectors  : Two popular texts to numerical conversion techniques using word vectors :                        
+                                      i) Vector Averaging : Averaging is preferred choice when we intend to use ML models such as lr, svm, gbm etc. 
+                                     ii) create Embedding Matrix and then generate Keras Embedding layer
+
+                                      
+                                                           
+                e) Apply ML/DL models.
+                              :  Now fit embedding layer in sequential model followed by another layers such as LSTM,flatten, etc....
+                              :  Now compile model and fit for training.    
+                
+      
+      
+      
+  5) BERT - A new technique
