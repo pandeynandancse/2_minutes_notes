@@ -1,0 +1,70 @@
+comment 
+escape sequence=> \\n
+print("",end="")
+
+variable 
+datatypes
+typecasting -> int("54")
+
+string->slicing->len -> count->endswith ->capitalize()->lower()->find()
+
+list->append->slicing -> indexing
+dictionary->key value  pair->items ->keys->update
+set()->add()->intersection()->remove()
+--------------------------------------------------------------------------------------------------------------------------------
+
+function and docstring:
+def summing(a,b):
+    """ this function does not work for three variable"""
+    return a+b
+summing(5,2)    /// 7
+
+print(summing.__doc__)  // this function does not work for three variable
+---------------------------------------------------------------------------------------------------------------------------------
+
+try:
+   ----
+   ----
+except Exceptoin as e:
+   print(e)
+print("This line wil print")
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+1) Modes for file:
+r   open file for reading
+w   open file for writing
+x   creates file if not exists
+a  add more content to file
+t  text mode
+b binary mode
++ read and write
+
+2) f = open("abc.txt","rt")
+  a) content = f.read(no_of_character)
+  b) for line in f:
+         print(line)   //prints line by  
+  c) f.readline()   // read only one whole line atonce
+  d) f.readlines() /// all lines i.e. read whole file at once
+  
+  
+3) 
+  
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
