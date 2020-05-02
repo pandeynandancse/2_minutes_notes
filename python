@@ -1,3 +1,6 @@
+
+
+
 comment 
 escape sequence=> \\n
 print("",end="")
@@ -48,15 +51,535 @@ b binary mode
   d) f.readlines() /// all lines i.e. read whole file at once
   
   
-3) 
+3) f = open("abc.txt","w")
+   f.write("Content to write")
+   // replaces old content and writes new content
+   
+4)    f = open("abc.txt","a")
+   f.write("Content to write")   /// appends new content in file 
+   
   
+5) f.tell()  // tells the character number at which pointer is currently poinitng.
+
+6) f.seek(10)  // moves cursor to 10th character of file
+
+
+7) using with block with files------
+   with open("abc.txt","w") as f:
+         f.read(4)  // reads 4 characters
+   Now there is no need to close file. with automatically handles it.
+   
+   
+----------------------------------------------------------------------------------------------------------------------------
+Scope :
+
+1) global variable and local variable
+2) global  keyword:  it allows value's global access instead of local access.
+
+----------------------------------------------------------------------------------------------------------------
+
+lambda or anonymous functions:
+
+def minus(x,y):
+    return x-y
+    
+minus = lambda x,y :  x-y
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Module:(prewritten package)
+eg) random->>>
+       random.randint(0,5)
+       random.random() * 10   //// random numbers till 10
+       random.choice(list_name)   // random choiced from list
+       
+       
+ eg) audio module
+ eg) video module
+ eg) youtube video module
+ 
+----------------------------------------------------------------------------------------------------------------
+   
+f-string and string formatting:(f-string means fast string and string  formatting means putting variable inside string)
+ 
+ 
+ eg) 
+                 # F strings
+                import math
+
+                me = "Harry"
+                a1 =3
+                # a = "this is %s " %me             /// this is harry
+                # a = "this is %s %s"%(me, a1)       // this is harry 3
+                # a = "This is {} {}"            
+                # b = a.format(me, a1)             
+                # print(b)                           //// this is harry 3 
+                # a = "This is {1} {0}"            
+                # b = a.format(me, a1)             
+                # print(b)                           //// this is 3 harry
+                a = f"this is {me} {a1} {math.cos(65)}"          
+                # time
+                print(a)                 // this is harry 3 0.562
+  
+
+------------------------------------------------------------------------------------------------------------
+
+*args and **kwargs:(for variable length list and dictionary as function argument)
+
+                        # def function_name_print(a, b, c, d, e):
+                        #     print(a, b, c, d, e)
+
+                        def funargs(normal, *argsrohan, **kwargsbala):
+                            print(normal)
+                            for item in argsrohan:
+                                print(item)
+                            print("\nNow I would Like to introduce some of our heroes")
+                            for key, value in kwargsbala.items():
+                                print(f"{key} is a {value}")
+
+
+                        # function_name_print("Harry", "Rohan", "Skillf", "Hammad", "Shivam")
+
+                        har = ["Harry", "Rohan", "Skillf", "Hammad",
+                               "Shivam", "The programmer"]
+                        normal = "I am a normal Argument and the students are:"
+                        kw = {"Rohan":"Monitor", "Harry":"Fitness Instructor",
+                              "The Programmer": "Coordinator", "Shivam":"Cook"}
+                        funargs(normal, *har, **kw)
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+time module:
+         time.sleep(seconds)
+         time.time()
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Requirements,txt and virtual enviroment
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Enumerate():
+for index, item in enumerate(ierable):
 ----------------------------------------------------------------------------------------------------------------------------
 
 
+How import works:
+a) import file2
+   print(file2.a)
+   print(file2.function_name())
+  
+  
+b) from file2 import a
+   from file import a
+   
+   // here is ambiguity so use in common practice as shown in (a)
+   // if no ambiguity occurs then can use this format
+   
+   
+c) import sys
+    print(sys.path)   /// list of paths where our program will see for any package
+    
+    
+ -----------------------------------------------------------------------------------------------------------------------------------
+ Question) What is    If __name__==__main__   ???
+ 
+ Answer)               --------------------------------In file1.py----------------------  
+                                    def printhar(string):
+                                        return f"nandan {string}"
+
+                                    def add(num1, num2):
+                                        return num1 + num2 + 5
+
+                                    print("and the name is", __name__)          //// main
+                                    if __name__ == '__main__':
+                                        print(printhar("pandey"))              //// nandan pandey
+                                        o = add(4, 6)
+                                        print(o)                                  /// /// 15
+
+
+                      --------------------------------In file2.py----------------------------
+                               import file1
+                               print(file1.add(5,6))           //// 16
+                               print("and the name is", __name__)        ///// file1  
+
+                    --------------------------------------------------------------------------------------------
+             Without if __name__ == __main__  ==>>>all print statements are executed that exists in imported module/file 
+             
+                               --------------------------------In file1.py----------------------  
+                                                    def printhar(string):
+                                                        return f"nandan {string}"
+
+                                                    def add(num1, num2):
+                                                        return num1 + num2 + 5
+
+                                                    print("and the name is", __name__)          //// main
+                                                    
+                                                        print(printhar("pandey"))          ///// nandan pandey
+                                                        o = add(4, 6)
+                                                        print(o)                                /// 15
+
+
+                                --------------------------------In file2.py----------------------------
+                                               import file1
+                                               print(file1.add(5,6))           //// 16
+                                                                              //// nandan pandey
+                                                                              /// 15
+                                               print("and the name is", __name__)        ///// file1  
 
 
 
 
+---------------------------------------------------------------------------------------------------------------------------------------
+
+join()
+
+eg) li = ["nandan","pandey"]
+    a = "and".join(li)
+     print(a)              ///// nandan and pandey
+--------------------------------------------------------------------------------------------------------------------------------
+
+1) map()
+-->> first argument is that function which you want to apply on all elements of list
+-->> list is second argument
+eg) list(map(int,my_list))
+
+
+
+
+eg) num = [2,3,5,6,76,3,3,2]
+# square = list(map(lambda x: x*x, num))
+# print(square)
+
+
+
+
+eg)  def square(a):
+    return a*a
+ def cube(a):
+     return a*a*a
+ func = [square, cube]
+ num = [2,3,5,6,76,3,3,2]
+ for i in range(5):
+     val = list(map(lambda x:x(i), func))
+     print(val)                         
+
+
+
+
+
+2) filter()
+eg) list_1 = [1,2,3,4,5,6,7,8,9]
+ def is_greater_5(num):
+     return num>5
+gr_than_5 = list(filter(is_greater_5, list_1))
+print(gr_than_5)
+
+
+
+
+    
+
+
+3) Reduce()
+from functools import reduce
+list1 = [1,2,3,4,2]
+num = reduce(lambda x,y:x+y, list1)     //// 12
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Decorators:
+
+                            def dec1(func1):
+                                def nowexec():
+                                    print("Executing now")
+                                    func1()
+                                    print("Executed")
+                                return nowexec
+
+                            @dec1
+                            def who_is_harry():
+                                print("Harry is a good boy")
+
+                            # who_is_harry = dec1(who_is_harry)
+
+                            who_is_harry()
+                            
+                            
+                            
+                            
+ -------------------------------------------------------------------------------------------------------------------------------
+ 
+ Claass and objects:(class variable cannot be changed by object/instance but instance/object can access class variable)
+ 
+ a)                     class Employee:
+                            no_of_leaves = 8                  //// shared between all onjects///// class variable ,not instance variable 
+                            pass
+
+                        nandan = Employee()
+                        pandey = Employee()
+
+                       nandan.name = "Nandan"
+                       nandan.salary = 455
+                      nandan.role = "Instructor"
+
+                        pandey.name = "Panddy"
+                        pandey.salary = 4554
+                        pandey.role = "Student"
+                        print(nandan.__dict__)         ////  name:Nandan, salary:455, role:Instructor
+                        print(Employee.no_of_leaves)    //// 8
+                        print(Employee.__dict__)     /// no_of_leaves
+                        Employee.no_of_leaves = 9 
+                        print(Employee.__dict__)     /// no_of_leaves
+                        print(Employee.no_of_leaves)  /// 9
+                        nandan.no_of_leaves=10  ///// not allowed //// only class can change class variable
+                        print(nandan.no_of_leaves)  ///// 9
+ 
+ 
+
+
+b) self is like this in c++,java
+c) __init__(self) is constructor
+
+d) In example-(a) object nandan has name ,salary and role fields and one shared field that is no_of_leaves.
+   If we want to change no_of_leaves as shown in above example then it is not allowed.
+   So if we want to chage no_of_leave for only this object then create a new method that changes no_of_leaves using @classmethod decorator.
+
+
+   class Employee:
+       no_of_leaves = 5
+       def __init__(self);
+            -----
+            -----
+       @classmethod
+       def change_leaves(cls, leaves):
+           cls.no_of_leaves = leaves
+
+
+   print(nandan.no_of_leaves)   /// 5
+   nandan.change_leaves(8)
+   print(nandan.no_of_leaves)    //// 8
+   print(pandey.no_of_leaves)    /// 5
+   Employee.change_leaves(35)    
+   print(Employee.no_of_leaves)   /// 34
+   print(pandey.no_of_leaves)    /// 34
+   print(nandan.no_of_leaves)    //// 8
+   
+   NOTE: cls can be object or class any of them but self can only be object
+   Result : class variable and specific object's class attribute can be changed.
+   
+
+-------------------------------------------------------------------------------------------------------------------------------
+1) function that is decorated with class method  can be called over object or class both.
+    classmethod can be used for changing class variable.
+2) function that is decorated with static method can be called over object or class both.Use it if you don't want to use self or cls.
+   
+   
+          a) Class Method as alternative constructor:
+
+                               class Employee:
+                                    no_of_leaves = 8
+
+                                    def __init__(self, aname, asalary, arole):
+                                        self.name = aname
+                                        self.salary = asalary
+                                        self.role = arole
+
+                                    def printdetails(self):
+                                        return f"The Name is {self.name}. Salary is {self.salary} and role is {self.role}"
+
+                                    @classmethod
+                                    def change_leaves(cls, newleaves):
+                                        cls.no_of_leaves = newleaves
+
+                                    @classmethod
+                                    def from_dash(cls, string):
+                                        # params = string.split("-")
+                                        # print(params)
+                                        # return cls(params[0], params[1], params[2])
+                                        return cls(*string.split("-"))             ////// returns list  using *args
+
+    
+    
+    
+                                    @staticmethod
+                                    def printgood(string):
+                                        print("This is good " + string)
+                                        
+                                        
+                                        
+                                        
+                                harry = Employee("Harry", 255, "Instructor")
+                                rohan = Employee("Rohan", 455, "Student")
+                                karan = Employee.from_dash("Karan-480-Student")   ///// alternative way of constructor using class methods
+
+                                print(karan.no_of_leaves)
+                                # rohan.change_leaves(34)
+                                #
+                                # print(harry.no_of_leaves)
+   
+                                Employee.printgood("Rohan")                       //// This is good rohan
+                                rohan.printgood("Roha")                         //// tTis is good Roha
+                
+
+---------------------------------------------------------------------------------------------------------------------------------
+python and c++ allows multiple inheritance but java does not.
+----------------------------------------------------------------------------------------------------------------------------------
+
+Operator overloading:
+1) use funciton name to overload operator as to overload operator + use __add__(self), for / use __truediv__(self)  ===>> this is convention in python.
+
+These function names are called 'Dunder methods'
+
+
+2) __repr__ and __str__ ==>>> both are used to get a string representation of object.  
+                        ==>>> str is more powerful than repr 
+                        ==>>> repr works until str does not come into existance or explicitly called by passing object
+                        ==>> repr computes the official rereentation of object
+                        ===>> str computes the readable representation of object
+                        ==>> repr and str are also user defined for better understanding of their created object.
+
+
+
+
+                        class Employee:
+                            no_of_leaves = 8
+
+                            def __init__(self, aname, asalary, arole):
+                                self.name = aname
+                                self.salary = asalary
+                                self.role = arole
+
+                            def printdetails(self):
+                                return f"The Name is {self.name}. Salary is {self.salary} and role is {self.role}"
+
+                            @classmethod
+                            def change_leaves(cls, newleaves):
+                                cls.no_of_leaves = newleaves
+
+                            def __add__(self, other):
+                                return self.salary + other.salary
+
+                            def __truediv__(self, other):
+                                return self.salary / other.salary
+
+                            def __repr__(self):
+                                return f"Employee('{self.name}', {self.salary}, '{self.role}')"
+
+                            def __str__(self):
+                                return f"The Name is {self.name}. Salary is {self.salary} and role is {self.role}"
+
+                        emp1 =Employee("Harry", 345, "Programmer")
+                        # emp2 =Employee("Rohan", 55, "Cleaner")
+                        
+                        print(str(emp1))
+                        print(emp1)
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+Setter and property decorator: ==>> property decorator allows us to use any function as attribute that means no use of () for function .
+
+
+                                class Employee:
+                                    def __init__(self, fname, lname):
+                                        self.fname = fname
+                                        self.lname = lname
+                                        # self.email = f"{fname}.{lname}@codewithharry.com"
+
+                                    def explain(self):
+                                        return f"This employee is {self.fname} {self.lname}"
+
+                                    @property
+                                    def email(self):
+                                        if self.fname==None or self.lname == None:
+                                            return "Email is not set. Please set it using setter"
+                                        return f"{self.fname}.{self.lname}@codewithharry.com"
+
+                                    @email.setter                       //// email sets the property fname and lname that was created by constructor 
+                                    def email(self, string):
+                                        print("Setting now...")
+                                        names = string.split("@")[0]
+                                        self.fname = names.split(".")[0]
+                                        self.lname = names.split(".")[1]
+
+                                    @email.deleter                         /// email deletes the fname and lname constructed property.
+                                    def email(self):
+                                        self.fname = None
+                                        self.lname = None
+
+
+                                hindustani_supporter = Employee("Hindustani", "Supporter")
+                                # nikhil_raj_pandey = Employee("Nikhil", "Raj")
+
+                                print(hindustani_supporter.email)
+
+                                hindustani_supporter.fname = "US"
+
+                                print(hindustani_supporter.email)
+                                hindustani_supporter.email = "this.that@codewithharry.com"
+                                print(hindustani_supporter.fname)
+
+                                del hindustani_supporter.email
+                                print(hindustani_supporter.email)
+                                hindustani_supporter.email = "Harry.Perry@codewithharry.com"
+                                print(hindustani_supporter.email) ///////"Harry.Perry@codewithharry.com"
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Object introspection : looking at details of object---->>> inspection of object
+
+
+                                    skillf = Employee("Skill", "F")
+                                   
+                                    o = "this is a string"
+                                    # print(dir(skillf))
+                                    # print(id("that that"))
+
+                                    import inspect
+                                    print(inspect.getmembers(skillf))  ///// all functions of this object's class
+                                    
+                                    
+--------------------------------------------------------------------------------------------------------------------------------------                                    
+
+
+"""
+Iterable - __iter__() or __getitem__()
+Iterator - __next__()
+Iteration -
+
+"""
+
+def gen(n):
+    for i in range(n):
+        yield i
+
+g = gen(3)
+# print(g.__next__())
+# print(g.__next__())
+# print(g.__next__())
+# print(g.__next__())
+
+
+# for i in g:
+#     print(i)
+
+h = 546546
+ier = iter(h)
+print(ier.__next__())
+print(ier.__next__())
+print(ier.__next__())
+# for c in h:
+#     print(c)
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
 
 
 
