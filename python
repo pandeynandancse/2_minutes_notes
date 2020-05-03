@@ -581,13 +581,204 @@ print(ier.__next__())
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
+for loop with else:
+
+            khana = ["roti", "Sabzi", "chawal"]
+            for item in khana:
+                if item == "rotiroll":
+                    break
+            else:
+                print("Your item was not found")
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+function caching:  stores some functin calls' value so that there is no need of rerun of function when ever called.
+                : decorator @lru_cache()
+
+
+
+import time
+from functools import lru_cache
+
+@lru_cache(maxsize=32)
+def some_work(n):
+    #Some task taking n seconds
+    time.sleep(n)
+    return n
+
+if __name__ == '__main__':
+    print("Now running some work")
+    some_work(3)
+    some_work(1)
+    some_work(6)
+    some_work(2)
+    print("Done... Calling again")
+    input()
+    some_work(3)
+    print("Called again")
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+try  
+except: when error occurs in try block then except block runs
+else: if except block runs then else not , if except does not runs then else runs
+finally: either try runs or except runs , finally always runs.
+
+
+
+                        f1 = open("harry.txt")
+
+                        try:
+                            f = open("does2.txt")
+
+                        except EOFError as e:
+                            print("Print eof error aa gaya hai", e)
+
+                        except IOError as e:
+                            print("Print IO error aa gaya hai", e)
+
+                        else:
+                            print("This will run only if except is not running")
+
+                        finally:
+                            print("Run this anyway...")
+                            # f.close()
+                            f1.close()
+
+                        print("Important stuff")
+-----------------------------------------------------------------------------------------------------------------------------
+
+Coroutines : When we call coroutine nothing happens, it runs only in response to the next() and send() method. 
+           : whatever value we send to coroutine is captured and returned by (yield) expression.
+           : A value can be send to the coroutine by send() method.
+           : takes value in yield after next() method is applied to coroutines.
+           : use when you have to use some part of function again and again and it takes always too much time to execute again and again.
+           : so using corotuine only once time consuming part of program runs and after that whenever u call it it serves you without executing itself again.
+           
+
+
+                           eg)             def searcher():
+                                            import time
+                                            # Some 4 seconds time consuming task
+                                            book = "This is a book on harry and code with harry and good"
+                                            time.sleep(4)
+
+                                            while True:
+                                                text = (yield)
+                                                if text in book:
+                                                    print("Your text is in the book")
+                                                else:
+                                                    print("Text is not in the book")
+
+                                        search = searcher()
+                                        print("search started")
+                                        next(search)
+                                        print("Next method run")
+                                        search.send("harry")
+
+                                        search.close()
+                                        search.send("harry")
+                                        # input("press any key")
+                                        # search.send("harry and")
+                                        # input("press any key")
+                                        # search.send("thi si")
+                                        # input("press any key")
+                                        # search.send("joker")
+                                        # input("press any key")
+                                        # search.send("like this video")
 
 
 
 
 
+                      eg) # Python3 program for demonstrating 
+                                                # coroutine execution 
+
+                                                def print_name(prefix): 
+                                                    print("Searching prefix:{}".format(prefix)) 
+                                                    while True: 
+                                                        name = (yield) 
+                                                        if prefix in name: 
+                                                            print(name) 
+
+                                                # calling coroutine, nothing will happen 
+                                                corou = print_name("Dear") 
+
+                                                # This will start execution of coroutine and 
+                                                # Prints first line "Searchig prefix..." 
+                                                # and advance execution to the first yield expression 
+                                                corou.__next__() 
+
+                                                # sending inputs 
+                                                corou.send("Atul") 
+                                                corou.send("Dear Atul") 
 
 
 
+------------------------------------------------------------------------------------------------------------------------------------
+OS module:
+ 
+ 
+                        import os
+                        # print(dir(os))
+                        # print(os.getcwd())
+                        # os.chdir("C://")                         # change current working directory
+                        # print(os.getcwd())
+                        # f = open("harry.txt")
+                        # print(os.listdir("C://"))
+                        # os.makedirs("This/that")
+                        # os.rename("harry.txt", "codewithharry.txt")
+                        # print(os.environ.get('Path'))
+                        # print(os.path.join("C:/", "/harry.txt"))
 
+                        # print(os.path.exists("C://Program Files2"))
+                        print(os.path.isfile("C://Program Files"))
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+HTTPS requests:
+
+                import requests
+                r = requests.get("https://financialmodelingprep.com/api/company/price/AAPL")
+                print(r.text)
+                print(r.status_code)
+
+                # url = "www.something.com"
+                # data = {
+                #     "p1":4,
+                #     "p2":8
+                # }
+                # r2 = requests.post(url=url, data=data)
+
+---------------------------------------------------------------------------------------------------------------------------------
+json module: loads is used for parsing json from string that has json format==> s in loads stands for string
+            : load is used for parsing json form file  that has jaon content
+            : dumps is used for converting dictionary into json compatible format.
+
+                import json
+                data = '{"var1":"harry", "var2":56}'
+                print(data)
+
+                parsed = json.loads(data)  
+                print(type(parsed))
+
+                #Task 1 - json.load?
+
+
+                data2 = {
+                    "channel_name": "CodeWithHarry",
+                    "cars": ['bmw', 'audi a8', 'ferrari'],
+                    "fridge": ('roti', 540),
+                    "isbad": False
+                }
+
+                jscomp = json.dumps(data2)
+                print(jscomp)
+
+                # Task 2 = what is sort_keys parameter in dumps
+
+--------------------------------------------------------------------------------------------------------------------------------------
+pickle :
 
