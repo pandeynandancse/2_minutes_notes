@@ -825,11 +825,144 @@ c) pyinstaller --onefile main.py
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
-Raise :
+Raise : For creating your own exception or write your own description in predefined/builtin exception/error.
 
-    
-    
 
+                    # a = input("What is your name")
+                    # b = input("How much do you earn")
+                    # if int(b)==0:
+                    #     raise ZeroDivisionError("b is 0 so stopping the program")
+                    # if a.isnumeric():
+                    #     raise Exception("Numbers are not allowed")
+                    #
+                    # print(f"Hello {a}")
+                    # 1000 lines taking 1 hour
+
+                    # Task - Write about 2 built in exception
+
+                    c = input("Enter your name")
+                    try:
+                        print(a)
+
+                    except Exception as e:
+
+                        if c =="harry":
+                            raise ValueError("Harry is blocked he is not allowed")
+
+                        print("Exception handled")
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------
+ is vs ==
+ 
+# == - value equality - Two objects have the same value
+# is - reference equality - Two references refer to the same object
+
+
+
+
+                       a=[7,4,5]
+                       b=a                                 ///// creating same reference
+                       b==a       //true
+                       b is a     //true
+                       b[0] =2
+                       print(a)   // 2,4,5
+                       c = a[:]                           //// creating new copy 
+                       c is a     // false
+                       c is b       /// false
+                       c==a        /// true
+                       c==b        // true
+
+
+
+
+       
+                        a =[6, 4 , "34"]
+                        b = [6, 4 , "34"]
+                        print(b is a)           ///// false
+                           b ==a           ///true
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+Command line utility: argparse utility
+
+
+                            import argparse
+                            import sys
+
+                            def calc(args):
+                                if args.o == 'add':
+                                    return args.x + args.y
+
+                                elif args.o == 'mul':
+                                    return args.x * args.y
+
+                                elif args.o == 'sub':
+                                    return args.x - args.y
+
+                                elif args.o == 'div':
+                                    return args.x / args.y
+
+                                else:
+                                    return "Something went wrong"
+
+                            if __name__ == '__main__':
+                                parser = argparse.ArgumentParser()
+                                parser.add_argument('--x', type=float, default=1.0,
+                                                    help="Enter first number. This is a utility for calculation.")
+
+                                parser.add_argument('--y', type=float, default=3.0,
+                                                    help="Enter second number. This is a utility for calculation. ")
+
+                                parser.add_argument('--o', type=str, default="add",
+                                                    help="This is a utility for calculation. ")
+
+                                args = parser.parse_args()
+                                sys.stdout.write(str(calc(args)))          /// writing on command line
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Package: creating package
+
+a) path -->  paent_folder/setup.py :
+
+                from setuptools import setup
+                setup(name="packageharry",
+                version="0.3",
+                description="This is code with harry package",
+                long_description = "This is a very very long description",
+                author="Harry",
+                packages=['packageharry'],
+                install_requires=[pandas])
+
+
+
+b) path-->  parent_folder/package_folder/__init__.py :
+                        import pandas
+                        class Achha:
+                            def __init__(self):
+                                print("Constructor ban gaya")
+
+                        def achhafunc(self, number):
+                            print("This is a function")
+                            return number
+
+
+
+c) pip install wheel
+
+d) run ==>> python sdist bdist_wheel
+           
+e) created folder of dist -->>>> here exists wheel file    ---->> path: parentfolder/dist    
+
+f) install this wheel file -->>> pip install wheel_file     
+
+g) if some change occured in __init__.py file then create new version.
 
 
 
