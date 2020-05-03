@@ -780,5 +780,56 @@ json module: loads is used for parsing json from string that has json format==> 
                 # Task 2 = what is sort_keys parameter in dumps
 
 --------------------------------------------------------------------------------------------------------------------------------------
-pickle :
+pickling: object serilization technique
+       : writing python objects such as list,dictionary, tuple etc. into file.
+       : dump()  // writing object in file
+       : load()  // reading object from file
+       : loads()  // reading byte object from file =>> s for string
+       : it is important to use binary mode for read and write
+                                        import pickle
+
+                                        # Pickling a python object
+                                        # cars = ["Audi", "BMW", "Maruti Suzuki", "Harryti Tuzuki"]
+                                        # file = "mycar.pkl"
+                                        # fileobj = open(file, 'wb')
+                                        # pickle.dump(cars, fileobj)
+                                        # fileobj.close()
+
+                                        file = "mycar.pkl"
+                                        fileobj = open(file, 'rb')
+                                        mycar = pickle.load(fileobj)
+                                        print(mycar)
+                                        print(type(mycar))
+
+
+                                        # pickle.loads = ?
+
+unpickling: reading objects from file 
+
+
+
+
+Pickle Module: Python pickle module is used for serializing and de-serializing a Python object structure.
+               Any object in Python can be pickled so that it can be saved on disk. What pickle does is that 
+               it “serializes” the object first before writing it to file. Pickling is a way to convert a 
+               python object (list, dict, etc.) into a character stream. The idea is that this character stream 
+               contains all the information necessary to reconstruct the object in another python script.
+-----------------------------------------------------------------------------------------------------------------------------------
+
+.py to .exe:
+
+a) pip install pyinstaller
+b) pyinstaller main.py 
+If only one file required then (Although they are also get extracted like above )-->
+c) pyinstaller --onefile main.py
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Raise :
+
+    
+    
+
+
+
 
