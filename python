@@ -960,9 +960,84 @@ d) run ==>> python sdist bdist_wheel
            
 e) created folder of dist -->>>> here exists wheel file    ---->> path: parentfolder/dist    
 
-f) install this wheel file -->>> pip install wheel_file     
+f) install this wheel file -->>> pip install wheel_file     -->> that is actually installing my package--> hoorrah distribute this package.....
 
 g) if some change occured in __init__.py file then create new version.
 
 
 h) which code is inside init.py() is converted into package.
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+creating virtual environent and requirements==>>detect major python version
+
+    file of virtual environement : run_VirtualEnv.bat
+                                                @echo off
+
+                                                ::-- Get Python major version
+                                                setlocal
+                                                for /f "tokens=2 delims=. " %%f in ('python --version') do set majorVersion=%%f
+                                                echo Detected Python major version: %majorVersion%
+
+                                                ::-- Create virtual environment
+                                                python -m venv .venv
+
+                                                ::--- Activate virtual environment
+                                                call .venv\Scripts\activate.bat
+
+                                                ::-- Upgrade pip at virtual environment
+                                                python -m pip install --upgrade pip
+
+                                                ::-- Install requirements at virtual environment
+                                                if "%majorVersion%"=="2" (
+                                                  pip install -r requirements2x.txt
+                                                ) else (
+                                                  pip install -r requirements.txt
+                                                )
+
+                                                ::-- Run main program at virtual environment
+                                                python main.py
+
+                                                ::-- Deactivate virtual environment
+                                                call .venv\Scripts\deactivate.bat
+
+                                                pause
+
+
+
+
+       
+       
+       ---------------
+       if python3 detected:
+           requiremnts.txt will be like:
+                        pandas==1.0.3
+                        python-dateutil==2.8.1
+                        pytz==2019.3
+                        requests==2.23.0
+                        six==1.14.0
+                        tqdm==4.45.0
+                        urllib3==1.25.8
+                        xlrd==1.2.0
+                        
+         -----------------
+         if python2 detected:
+              requirements2.txt will ne like 
+                        pytz==2019.3
+                        requests==2.23.0
+                        six==1.14.0
+                        tqdm==4.45.0
+                        urllib3==1.25.8
+                        xlrd==1.2.0
+         
+ -------------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+ 
+ 
+ 
+ 
