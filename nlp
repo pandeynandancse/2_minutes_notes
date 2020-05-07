@@ -180,4 +180,50 @@
       
       
       
-  5) BERT - A new technique
+  5) BERT - A new technique:
+      Bidirectional Encoder Representations from Transformers .
+      : Bidirectional : BERT takes whole text passage as input and reads passage in both direction to understand
+                        the meaning of each word.
+                        
+      : Transformers : BERT is based on a Deep Transformer network. Transformer network is a type of network that
+                       can process efficiently long texts by using attention. 
+                       An attention is a mechanism to learn contextual relations between words (or sub-words) in a text.   
+                       
+      : Encoder Representation : Originally Transformer includes two separate mechanisms — an encoder that reads the text input
+                                 and a decoder that produces a prediction for the task, since BERT’s goal is to generate a 
+                                 language model only the encoder mechanism is necessary hence 'encoder representation'
+                                 
+                                 
+                                 
+                                 
+    Question)  How BERT performs Bidirectional training?
+
+Answer)   BERT uses following two prediction models simultaneously with the goal of minimizing the combined loss function 
+            of the two strategies
+
+          a) Masked Language Model : Before feeding word sequences into BERT, 15% of the words in each sequence are replaced 
+                               with a [MASK] token. The model then attempts to predict the original value of the masked words,
+                               based on the context provided by the other, non-masked, words in the sequence.
+
+    b) Next Sentence Prediction : The model receives pairs of sentences as input and learns to predict if the second sentence 
+                                  in the pair is the subsequent sentence in the original document. During training,
+                                  50% of the inputs are a pair in which the second sentence is the subsequent sentence in
+                                  the original document, while in the other 50% a random sentence from the corpus is 
+                                  chosen as the second sentence. The assumption is that the random sentence will be
+                                  disconnected from the first sentence.
+                          
+                           
+                                 
+     Question) How BERT Encoding works: 
+
+   Answer):     Each sentence is first tokenized into tokens.
+   
+                A [CLS] token is inserted at the beginning of the first sentence and a [SEP] token is inserted at the end of 
+                each sentence.
+                
+          Tokens that comply with the fixed vocabulary are fetched and assigned with following 3 properties.
+        
+         Token IDs - to assign Unique token-id from BERT’s tokenizer.
+         Padding ID (Mask-Id) - to indicate which elements in the sequence are tokens and which are padding elements.
+         Segment IDs - to distinguish different sentences.
+--------------------------------------------------------------------------------------------------------------------------------------
