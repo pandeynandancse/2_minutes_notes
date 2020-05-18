@@ -1041,3 +1041,10 @@ creating virtual environent and requirements==>>detect major python version
  
  
  
+ bisect module:(it does not checks whether list is sorted or not)
+ 
+ bisect.bisect(li,num) /// return index where num will be put in li
+ bisect.insort(li,num) // inserts num in li in proper position 
+ 
+ 
+ 
