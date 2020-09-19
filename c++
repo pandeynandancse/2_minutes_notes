@@ -1617,3 +1617,18 @@ Array in c++:
                               return 0;
                            }
      
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+when you
+
+#include <cs50.h>
+the compiler looks for cs50.h in a standard list of system directories (e.g., /usr/include/).
+
+on the other hand, when you
+
+#include "cs50.h"
+the compiler looks for cs50.h first in the same directory as the directory of the current source code file,
+then a list of directories that is often referred to as quote directories, and lastly the same directories as #include <cs50.h>
