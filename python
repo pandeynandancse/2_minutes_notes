@@ -1048,3 +1048,22 @@ creating virtual environent and requirements==>>detect major python version
  
  
  
+ --------------------------------------------------------------------------------------------------------
+ 1) Whats defaultdict?
+ Answer : A defaultdict works exactly like a normal dict, but it is initialized with a function (“default factory”) 
+ that takes no arguments and provides the default value for a nonexistent key. A defaultdict will never raise a KeyError. 
+ Any key that does not exist gets the value returned by the default factory.
+ 
+ 
+ 2) list vs set vs tuple in python
+ Awer : List: mutable , ordered , replacible
+        set : immutable , unordered, non-replacible
+        tuple : immutable , ordered , non-replacible
+        
+    
+    
+ 3) Python all() in list
+The all() method returns True when all elements in the given iterable are true. If not, it returns False.
+ 
+ 
+ 
