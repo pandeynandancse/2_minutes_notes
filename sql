@@ -718,3 +718,17 @@ Answer: Set of rules that restrict the values of one or more columns of the tabl
    select from where orderby groupby having
    select from where orderby limit
    select from join using
+
+
+
+
+
+
+
+
+====================================================================
+https://www.softwaretestinghelp.com/50-popular-sql-interview-questions-for-testers/
+javatpoint
+w3school
+geeksforgeeks
+
