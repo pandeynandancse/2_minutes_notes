@@ -211,10 +211,22 @@ Third Normal Form (3NF) – Dependent solely on the primary key and no other non
  
 cross join and natural join :  cross join produces the cross product or Cartesian product of two tables
                                whereas the natural join is based on all the columns having the same name and data types in both the tables.
+                               (https://www.geeksforgeeks.org/difference-between-natural-join-and-cross-join-in-sql/)
                                
                                
                                
                                
+                               
+                               
+   A Natural Join :  is where 2 tables are joined on the basis of all common columns.
+common column : is a column which has same name in both tables + has compatible datatypes in both the tables. You can use only = operator
+
+A Inner Join :  is where 2 tables are joined on the basis of common columns mentioned in the ON clause.
+common column : is a column which has compatible datatypes in both the tables but need not have the same name. You can use only any comparision operator like =, <=, >=, <, >, <>
+             ( https://stackoverflow.com/a/30844020/7442239 )
+                
+                
+                
 
 subquery in SQL : A subquery is a query inside another query where a query is defined to retrieve data or information back from the database.
                   In a subquery, the outer query is called as the main query whereas the inner query is called subquery.
